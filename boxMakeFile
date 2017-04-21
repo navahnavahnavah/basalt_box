@@ -1,0 +1,41 @@
+# 
+#Makefile for the geometry program 
+# 
+
+# macros go here
+FC=ifort
+FCFLAGS = -I/home/navah/include
+
+
+# libraries needed for linking, unused in the examples
+LDFLAGS = -L/home/navah/lib -liphreeqc
+
+# List of executables to be built within the package
+PROGRAMS = basalt_box
+
+# "make" builds all
+all: $(PROGRAMS)
+
+basalt_box_mod:
+
+basalt_box.o: basalt_box_mod.o
+basalt_box: basalt_box_mod.o
+
+%: %.o
+	$(FC) $(FCFLAGS) -o $@ $^ $(LDFLAGS)
+	
+%.o: %.f90
+	$(FC) $(FCFLAGS) -c $<
+
+%.o: %.F90
+	$(FC) $(FCFLAGS) -c $<
+	
+
+# Utility targets
+.PHONY: clean veryclean
+
+clean:
+	rm -f *.o *.mod *.MOD
+
+veryclean: clean
+	rm -f *~ $(PROGRAMS)

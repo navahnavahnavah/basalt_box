@@ -1,6 +1,6 @@
 module basalt_box_mod
 	implicit none
-	
+
 	INCLUDE "IPhreeqc.f90.inc"
 save
 
@@ -15,24 +15,24 @@ contains
 !
 ! ----------------------------------------------------------------------------------%%
 
-function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_pri, g_sec, g_sol, g_med, n_box, alt_num, temp_in, area_in, mix_in, timestep_in, param_exp_string_in, param_exp1_string_in, param_ol_string_in, param_pyr_string_in, param_plag_string_in)
+function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_pri, g_sec, g_sol, g_med, n_box, alt_num, temp_in, area_in, mix_in, timestep_in, param_exp_string_in, param_exp1_string_in)
 	integer :: g_pri, g_sec, g_sol, g_med, n_box, alt_num
 	integer :: i, ii, j, jj
 	real(4) :: solute0_in(g_sol), solute_step(g_sol,n_box)
 	real(4) :: primary_in(g_pri,n_box), secondary_in(g_sec,n_box), solute_in(g_sol,n_box), medium_in(g_med,n_box)
 	real(4) :: temp_in(n_box), area_in(n_box), mix_in(n_box), timestep_in, dt
-	
+
 	real(4) :: p_out(n_box,alt_num)
 	real(4) :: run_box(n_box,alt_num)
 	INTEGER(KIND=4) :: id
 	real(4) :: out_mat(4,alt_num)
-	
+
 	! STRINGS
 	character(len=25) :: s_verm_ca, s_analcime, s_phillipsite, s_clinozoisite, s_verm_na
 	character(len=25) :: s_diopside, s_epidote, s_minnesotaite, s_ferrite_ca, s_foshagite
 	character(len=25) :: s_gismondine, s_gyrolite, s_hedenbergite, s_chalcedony, s_verm_mg
 	character(len=25) :: s_ferrihydrite, s_lawsonite, s_merwinite, s_monticellite, s_natrolite
-	character(len=25) :: s_talc, s_smectite_low, s_prehnite, s_chlorite, s_rankinite 
+	character(len=25) :: s_talc, s_smectite_low, s_prehnite, s_chlorite, s_rankinite
 	character(len=25) :: s_scolecite, s_tobermorite_9a, s_tremolite, s_chamosite7a, s_clinochlore14a
 	character(len=25) :: s_clinochlore7a, s_andradite
 	character(len=25) :: s_saponite_ca, s_troilite, s_pyrrhotite, s_lepidocrocite, s_daphnite_7a
@@ -50,33 +50,32 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 	character(len=25) :: s_hco3, s_co3
 	character(len=25) :: s_water, s_w ! medium
 	character(len=25) :: param_exp_string_in, param_exp1_string_in
-	character(len=300) :: param_ol_string_in, param_pyr_string_in, param_plag_string_in
 	character(len=25) :: kinetics
-	 
+
 	CHARACTER(LEN=10000) :: line
 	character(len=45000) :: input_string
-	
+
 	character(len=59000) :: L5
-	
+
 	character(len=25) :: ol_k1, ol_e1, ol_n1, ol_k2, ol_e2, ol_k3, ol_e3, ol_n3
 	character(len=25) :: pyr_k1, pyr_e1, pyr_n1, pyr_k2, pyr_e2, pyr_k3, pyr_e3, pyr_n3
 	character(len=25) :: plag_k1, plag_e1, plag_n1, plag_k2, plag_e2, plag_k3, plag_e3, plag_n3
 	character(len=25) :: exp_ol1, exp_ol2, exp_ol3, exp_ol
 	character(len=25) :: exp_pyr1, exp_pyr2, exp_pyr3, exp_pyr
 	character(len=25) :: exp_plag1, exp_plag2, exp_plag3, exp_plag
-	
+
 	exp_ol1 = "0.01"
 	exp_ol2 = "0.001"
 	exp_ol3 = "0.01"
-	
+
 	exp_pyr1 = "0.01"
 	exp_pyr2 = "0.001"
 	exp_pyr3 = "0.01"
-	
+
 	exp_plag1 = "0.01"
 	exp_plag2 = "0.001"
 	exp_plag3 = "0.01"
-	
+
 	ol_k1 = "10.0^(-4.8)"
 	ol_e1 = "94.4"
 	ol_n1 = "1.0"
@@ -85,7 +84,7 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 	ol_k3 = ""
 	ol_e3 = ""
 	ol_n3 = ""
-	
+
 	pyr_k1 = "10.0^(-6.82)"
 	pyr_e1 = "78.0"
 	pyr_n1 = "0.7"
@@ -94,7 +93,7 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 	pyr_k3 = ""
 	pyr_e3 = ""
 	pyr_n3 = ""
-	
+
 	plag_k1 = "10.0^(-7.87)"
 	plag_e1 = "42.1"
 	plag_n1 = "0.626"
@@ -103,9 +102,9 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 	plag_k3 = ""
 	plag_e3 = ""
 	plag_n3 = ""
-	
-	
-	
+
+
+
 	L5 = "#  $Id: llnl.dat 4023 2010-02-09 21:02:42Z dlpark $" //NEW_LINE('')// &
 	&"" //NEW_LINE('')// &
 	&"LLNL_AQUEOUS_MODEL_PARAMETERS" //NEW_LINE('')// &
@@ -731,7 +730,7 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 	&"        -analytical     51.578          0.0     -11168.9        -14.865         0.0" //NEW_LINE('')// &
 
 
-		
+
 	&"1.0000 SO4-- + 1.0000 Ca++  =  CaSO4" //NEW_LINE('')// &
 	&"        -llnl_gamma           3.0    " //NEW_LINE('')// &
 	&"        log_k           +2.1111" //NEW_LINE('')// &
@@ -1953,14 +1952,14 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 	&"  log_k  40.17  #" //NEW_LINE('')// &
 	&"  delta_h  -354.987   kJ/mol  #" //NEW_LINE('')// &
 	&"  # Enthalpy of formation:    -6139.206  kJ/mol  07VIE" //NEW_LINE('')// &
-  
-  
+
+
 	&"Lepidocrocite" //NEW_LINE('')// &
 	&"FeOOH = +1.000Fe+3  -3.000H+  +2.000H2O  " //NEW_LINE('')// &
 	&"  log_k  0.75   #98DIA in 98CHI" //NEW_LINE('')// &
 	&"  delta_h  -64.26  kJ/mol  #" //NEW_LINE('')// &
 	&"  # Enthalpy of formation:    -556.4  kJ/mol  " //NEW_LINE('')// &
-  
+
 	&"Vermiculite-K" //NEW_LINE('')// &
 	&"K0.85Mg3Si3.15Al0.85O10(OH)2 = +3.000Mg+2  +0.850K+  +0.850Al+3  -9.400H+  +6.30H2O + 3.15SiO2  -0.600H2O " //NEW_LINE('')// &
 	&"  log_k  36.86  #" //NEW_LINE('')// &
@@ -1972,7 +1971,7 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 	&"  log_k  28.1   #" //NEW_LINE('')// &
 	&"  delta_h  -252.497   kJ/mol  #" //NEW_LINE('')// &
 	&"  # Enthalpy of formation:    -6005.94   kJ/mol  07VIE" //NEW_LINE('')// &
-  
+
 	&"Vermiculite-Ca" //NEW_LINE('')// &
 	&"Ca0.43Mg3Si3.14Al0.86O10(OH)2 = +0.430Ca+2  +3.000Mg+2  +0.860Al+3  -9.440H+  +6.28H2O + 3.14SiO2  -0.560H2O" //NEW_LINE('')// &
 	&"  log_k  40.68  #" //NEW_LINE('')// &
@@ -1996,23 +1995,24 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 
 
 	&""! //NEW_LINE('')// &
-	
-	!-after L5
-	
+
+	!-after L5 super long string!
+
 	solute_step = solute_in
 	dt = timestep_in
-	
+
 ! 	write(*,*) "m1" , dt/mix_in(1)
 ! 	write(*,*) "m2" , dt/mix_in(2)
 ! 	write(*,*) "m" , dt/mix_in(3)
-	
+
 	!kinetics = " precipitate_only"
 	kinetics = " "
-	
+
 	do i=1,n_box
-		
+
 
 		! write(*,*) mix_in
+		!# MIXING
 		if (i == 1) then
 			solute_in(:,1) = solute_step(:,1) * (1.0 - (dt/mix_in(1)) - (0.1*dt/mix_in(2)) ) + solute0_in * (dt/mix_in(1)) + solute_step(:,2) * (0.1*dt/mix_in(2))
 			!write(*,*) "solute_in1 after" , solute_in(:,1)
@@ -2020,7 +2020,7 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 			exp_pyr = exp_pyr1
 			exp_plag = exp_plag1
 		end if
-		
+
 		if (i == 2) then
 			solute_in(:,2) = solute_step(:,2) * (1.0 - (dt/mix_in(2)) ) + solute_step(:,1) * (dt/mix_in(2))
 			!write(*,*) "solute_in2 after" , solute_in(:,2)
@@ -2028,7 +2028,7 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 			exp_pyr = exp_pyr2
 			exp_plag = exp_plag2
 		end if
-		
+
 		if (i == 3) then
 			solute_in(:,3) = solute_step(:,3) * (1.0 - (dt/mix_in(3)) ) + solute0_in * (dt/mix_in(3))
 			!write(*,*) "solute_in3 after" , solute_in(:,3)
@@ -2036,14 +2036,14 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 			exp_pyr = exp_pyr3
 			exp_plag = exp_plag3
 		end if
-		
+
 ! 		! write(*,*) "running geochem for box:" , i
 ! 		write(*,*) "glass" , primary_in(5,i)
 ! 		write(*,*) "basalt1" , primary_in(4,i)
 ! 		write(*,*) "basalt2" , primary_in(3,i)
 ! 		write(*,*) "basalt3" , primary_in(2,i)
-		
-		
+
+
 		! solute_inS TO STRINGS
 		write(s_ph,'(F25.10)') solute_in(1,i)
 		write(s_alk,'(F25.10)') solute_in(2,i)
@@ -2060,10 +2060,10 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 		write(s_al,'(F25.10)') solute_in(13,i)
 		write(s_hco3,'(F25.10)') solute_in(14,i)
 		write(s_co3,'(F25.10)') solute_in(15,i)
-	
+
 		! MEDIUM TO STRINGS
 		write(s_w,'(F25.10)') medium_in(3,i)!solute_in3(3)
-	
+
 		! PRIMARIES TO STRINGS
 		write(s_feldspar,'(F25.10)') primary_in(1,i)
 		write(s_augite,'(F25.10)') primary_in(2,i)
@@ -2072,62 +2072,105 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 		write(s_basalt2,'(F25.10)') primary_in(3,i)
 		write(s_basalt1,'(F25.10)') primary_in(4,i)
 		write(s_glass,'(F25.10)') primary_in(5,i)
-	
+
 		! SECONDARIES TO STRINGS
-		write(s_stilbite,'(F25.10)') secondary_in(1,i)
-		write(s_aragonite,'(F25.10)') secondary_in(2,i)
-		write(s_kaolinite,'(F25.10)') secondary_in(3,i)
-		write(s_albite,'(F25.10)') secondary_in(4,i)
-		write(s_saponite,'(F25.10)') secondary_in(5,i)
-		write(s_celadonite,'(F25.10)') secondary_in(6,i)
-		write(s_clinoptilolite,'(F25.10)') secondary_in(7,i)
-		write(s_pyrite,'(F25.10)') secondary_in(8,i)
-		write(s_mont_na,'(F25.10)') secondary_in(9,i)
-		write(s_goethite,'(F25.10)') secondary_in(10,i)
-		write(s_dolomite,'(F25.10)') secondary_in(11,i)
-		write(s_smectite,'(F25.10)') secondary_in(12,i)
-		write(s_saponite_k,'(F25.10)') secondary_in(13,i)
-		write(s_anhydrite,'(F25.10)') secondary_in(14,i)
-		write(s_siderite,'(F25.10)') secondary_in(15,i)
-		write(s_calcite,'(F25.10)') secondary_in(16,i)
-		write(s_quartz,'(F25.10)') secondary_in(17,i)
-		write(s_kspar,'(F25.10)') secondary_in(18,i)
-		write(s_saponite_na,'(F25.10)') secondary_in(19,i)
-		write(s_nont_na,'(F25.10)') secondary_in(20,i)
-		write(s_nont_mg,'(F25.10)') secondary_in(21,i)
-		write(s_nont_k,'(F25.10)') secondary_in(22,i)
-		write(s_fe_celadonite,'(F25.10)') secondary_in(23,i)
-		write(s_nont_ca,'(F25.10)') secondary_in(24,i)
-		write(s_muscovite,'(F25.10)') secondary_in(25,i)
-		write(s_mesolite,'(F25.10)') secondary_in(26,i)
-		write(s_hematite,'(F25.10)') secondary_in(27,i)
-		write(s_mont_ca,'(F25.10)') secondary_in(28,i)
-		write(s_verm_ca,'(F25.10)') secondary_in(29,i)
-		write(s_analcime,'(F25.10)') secondary_in(30,i)
-		write(s_phillipsite,'(F25.10)') secondary_in(31,i)
-		write(s_diopside,'(F25.10)') secondary_in(32,i)
-		write(s_epidote,'(F25.10)') secondary_in(33,i)
-		write(s_gismondine,'(F25.10)') secondary_in(34,i)
-		write(s_hedenbergite,'(F25.10)') secondary_in(35,i)
-		write(s_chalcedony,'(F25.10)') secondary_in(36,i)
-		write(s_verm_mg,'(F25.10)') secondary_in(37,i)
-		write(s_ferrihydrite,'(F25.10)') secondary_in(38,i)
-		write(s_natrolite,'(F25.10)') secondary_in(39,i)
-		write(s_talc,'(F25.10)') secondary_in(40,i)
-		write(s_smectite_low,'(F25.10)') secondary_in(41,i)
-		write(s_prehnite,'(F25.10)') secondary_in(42,i)
-		write(s_chlorite,'(F25.10)') secondary_in(43,i)
-		write(s_scolecite,'(F25.10)') secondary_in(44,i)
-		write(s_chamosite7a,'(F25.10)') secondary_in(45,i)
-		write(s_clinochlore14a,'(F25.10)') secondary_in(46,i)
-		write(s_clinochlore7a,'(F25.10)') secondary_in(47,i)
-		write(s_saponite_ca,'(F25.10)') secondary_in(48,i)
-		write(s_verm_na,'(F25.10)') secondary_in(49,i)
-		write(s_pyrrhotite,'(F25.10)') secondary_in(50,i)
-		write(s_magnetite,'(F25.10)') secondary_in(51,i)
-		write(s_lepidocrocite,'(F25.10)') secondary_in(52,i)
-		write(s_daphnite_7a,'(F25.10)') secondary_in(53,i)
-		write(s_daphnite_14a,'(F25.10)') secondary_in(54,i)
+		! write(s_stilbite,'(F25.10)') secondary_in(1,i)
+		! write(s_aragonite,'(F25.10)') secondary_in(2,i)
+		! write(s_kaolinite,'(F25.10)') secondary_in(3,i)
+		! write(s_albite,'(F25.10)') secondary_in(4,i)
+		! write(s_saponite,'(F25.10)') secondary_in(5,i)
+		! write(s_celadonite,'(F25.10)') secondary_in(6,i)
+		! write(s_clinoptilolite,'(F25.10)') secondary_in(7,i)
+		! write(s_pyrite,'(F25.10)') secondary_in(8,i)
+		! write(s_mont_na,'(F25.10)') secondary_in(9,i)
+		! write(s_goethite,'(F25.10)') secondary_in(10,i)
+		! write(s_dolomite,'(F25.10)') secondary_in(11,i)
+		! write(s_smectite,'(F25.10)') secondary_in(12,i)
+		! write(s_saponite_k,'(F25.10)') secondary_in(13,i)
+		! write(s_anhydrite,'(F25.10)') secondary_in(14,i)
+		! write(s_siderite,'(F25.10)') secondary_in(15,i)
+		! write(s_calcite,'(F25.10)') secondary_in(16,i)
+		! write(s_quartz,'(F25.10)') secondary_in(17,i)
+		! write(s_kspar,'(F25.10)') secondary_in(18,i)
+		! write(s_saponite_na,'(F25.10)') secondary_in(19,i)
+		! write(s_nont_na,'(F25.10)') secondary_in(20,i)
+		! write(s_nont_mg,'(F25.10)') secondary_in(21,i)
+		! write(s_nont_k,'(F25.10)') secondary_in(22,i)
+		! write(s_fe_celadonite,'(F25.10)') secondary_in(23,i)
+		! write(s_nont_ca,'(F25.10)') secondary_in(24,i)
+		! write(s_muscovite,'(F25.10)') secondary_in(25,i)
+		! write(s_mesolite,'(F25.10)') secondary_in(26,i)
+		! write(s_hematite,'(F25.10)') secondary_in(27,i)
+		! write(s_mont_ca,'(F25.10)') secondary_in(28,i)
+		! write(s_verm_ca,'(F25.10)') secondary_in(29,i)
+		! write(s_analcime,'(F25.10)') secondary_in(30,i)
+		! write(s_phillipsite,'(F25.10)') secondary_in(31,i)
+		! write(s_diopside,'(F25.10)') secondary_in(32,i)
+		! write(s_epidote,'(F25.10)') secondary_in(33,i)
+		! write(s_gismondine,'(F25.10)') secondary_in(34,i)
+		! write(s_hedenbergite,'(F25.10)') secondary_in(35,i)
+		! write(s_chalcedony,'(F25.10)') secondary_in(36,i)
+		! write(s_verm_mg,'(F25.10)') secondary_in(37,i)
+		! write(s_ferrihydrite,'(F25.10)') secondary_in(38,i)
+		! write(s_natrolite,'(F25.10)') secondary_in(39,i)
+		! write(s_talc,'(F25.10)') secondary_in(40,i)
+		! write(s_smectite_low,'(F25.10)') secondary_in(41,i)
+		! write(s_prehnite,'(F25.10)') secondary_in(42,i)
+		! write(s_chlorite,'(F25.10)') secondary_in(43,i)
+		! write(s_scolecite,'(F25.10)') secondary_in(44,i)
+		! write(s_chamosite7a,'(F25.10)') secondary_in(45,i)
+		! write(s_clinochlore14a,'(F25.10)') secondary_in(46,i)
+		! write(s_clinochlore7a,'(F25.10)') secondary_in(47,i)
+		! write(s_saponite_ca,'(F25.10)') secondary_in(48,i)
+		! write(s_verm_na,'(F25.10)') secondary_in(49,i)
+		! write(s_pyrrhotite,'(F25.10)') secondary_in(50,i)
+		! write(s_magnetite,'(F25.10)') secondary_in(51,i)
+		! write(s_lepidocrocite,'(F25.10)') secondary_in(52,i)
+		! write(s_daphnite_7a,'(F25.10)') secondary_in(53,i)
+		! write(s_daphnite_14a,'(F25.10)') secondary_in(54,i)
+
+		!# secondaries to strings
+		WRITE(s_kaolinite,'(F25.10)') secondary3(1)
+		WRITE(s_saponite,'(F25.10)') secondary3(2)
+		WRITE(s_celadonite,'(F25.10)') secondary3(3)
+		WRITE(s_clinoptilolite,'(F25.10)') secondary3(4)
+		WRITE(s_pyrite,'(F25.10)') secondary3(5)
+		WRITE(s_mont_na,'(F25.10)') secondary3(6)
+		WRITE(s_goethite,'(F25.10)') secondary3(7)
+		WRITE(s_smectite,'(F25.10)') secondary3(8)
+		WRITE(s_calcite,'(F25.10)') secondary3(9)
+		WRITE(s_kspar,'(F25.10)') secondary3(10)
+		WRITE(s_saponite_na,'(F25.10)') secondary3(11) !!!!
+		WRITE(s_nont_na,'(F25.10)') secondary3(12)
+		WRITE(s_nont_mg,'(F25.10)') secondary3(13)
+		WRITE(s_fe_celadonite,'(F25.10)') secondary3(14)
+		WRITE(s_nont_ca,'(F25.10)') secondary3(15)
+		WRITE(s_mesolite,'(F25.10)') secondary3(16)
+		WRITE(s_hematite,'(F25.10)') secondary3(17)
+		WRITE(s_mont_ca,'(F25.10)') secondary3(18)
+		WRITE(s_verm_ca,'(F25.10)') secondary3(19)
+		WRITE(s_analcime,'(F25.10)') secondary3(20)
+		WRITE(s_phillipsite,'(F25.10)') secondary3(21)
+		WRITE(s_mont_mg,'(F25.10)') secondary3(22)
+		WRITE(s_gismondine,'(F25.10)') secondary3(23)
+		WRITE(s_verm_mg,'(F25.10)') secondary3(24)
+		WRITE(s_natrolite,'(F25.10)') secondary3(25)
+		WRITE(s_talc,'(F25.10)') secondary3(26) !!!!!!!!!
+		WRITE(s_smectite_low,'(F25.10)') secondary3(27)
+		WRITE(s_prehnite,'(F25.10)') secondary3(28)
+		WRITE(s_chlorite,'(F25.10)') secondary3(29) !!!!!!!!
+		WRITE(s_scolecite,'(F25.10)') secondary3(30)
+		WRITE(s_clinochlore14a,'(F25.10)') secondary3(31)
+		WRITE(s_clinochlore7a,'(F25.10)') secondary3(32)
+		WRITE(s_saponite_ca,'(F25.10)') secondary3(33)
+		WRITE(s_verm_na,'(F25.10)') secondary3(34)
+		WRITE(s_pyrrhotite,'(F25.10)') secondary3(35)
+		WRITE(s_fe_saponite_ca,'(F25.10)') secondary3(36) !!!
+		WRITE(s_fe_saponite_mg,'(F25.10)') secondary3(37) !!!
+		WRITE(s_daphnite_7a,'(F25.10)') secondary3(38) !!!
+		WRITE(s_daphnite_14a,'(F25.10)') secondary3(39) !!!
+		WRITE(s_epidote,'(F25.10)') secondary3(40) !!!
+
 ! 		write(s_verm_k,'(F25.10)') secondary_in(55,i)
 ! 		write(s_mont_mg,'(F25.10)') secondary_in(56,i)
 		!write(s_mont_mg,'(F25.10)') secondary_in(57,i)
@@ -2139,9 +2182,9 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 		write(s_temp,'(F25.10)') temp_in(i)
 		write(s_timestep,'(F25.10)') timestep_in
 		write(s_area,'(F25.10)') area_in(i)
-		
-		
-		
+
+
+
 		input_string = "SOLUTION 1 " //NEW_LINE('')// &
 		&"    units   mol/kgw" //NEW_LINE('')// &
 		&"    temp" // trim(s_temp) //NEW_LINE('')// &
@@ -2219,7 +2262,8 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 		&"   Lepidocrocite 0.0 " // trim(s_lepidocrocite) // kinetics //NEW_LINE('')// & ! iron oxyhydroxide
 
 
-		&"RATES" //NEW_LINE('')// & 
+		!# RATES
+		&"RATES" //NEW_LINE('')// &
 
 		! stopped using 1/26/17, night
 		! &"BGlass" //NEW_LINE('')// &
@@ -2233,26 +2277,34 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 
 
 		! linear decrease with alteration
+		! &"BGlass" //NEW_LINE('')// &
+		! &"-start" //NEW_LINE('')// &
+		! &"    10 rate0=M*110.0*(1.52e-5)*" // trim(param_exp_string_in) // "*(CALC_VALUE('R(sum)'))*(1.0e4)*(2.51189e-6)*exp(-25.5/(.008314*TK))" // &
+		! &"*(((ACT('H+')^3)/(TOT('Al')))^.33333)" //NEW_LINE('')// &
+		! &"    20 save rate0 * time" //NEW_LINE('')// &
+		! &"-end" //NEW_LINE('')// &
+
 		&"BGlass" //NEW_LINE('')// &
 		&"-start" //NEW_LINE('')// &
-		&"    10 rate0=M*110.0*(1.52e-5)*" // trim(param_exp_string_in) // "*(CALC_VALUE('R(sum)'))*(1.0e4)*(2.51189e-6)*exp(-25.5/(.008314*TK))" // &
-		&"*(((ACT('H+')^3)/(TOT('Al')))^.33333)" //NEW_LINE('')// &
-		&"    20 save rate0 * time" //NEW_LINE('')// &
+		&"	 10 base0 = 1e-10" //NEW_LINE('')// &
+		&"	 20 if (ACT('Al+3') > 1e-10) then base0 = ACT('Al+3')" //NEW_LINE('')// &
+		&"    30 rate0=M*110.0*((4.56e5)/(3.0e6))*" // TRIM(param_exp_string) // "*(2.51189e-6)*exp(-25.5/(.008314*TK))*(((ACT('H+')^3)/(ACT('Al+3')))^.33333)" //NEW_LINE('')// &
+		&"    40 save rate0 * time" //NEW_LINE('')// &
 		&"-end" //NEW_LINE('')// &
-		
+
 		&"Basalt1" //NEW_LINE('')// &
 		&"-start" //NEW_LINE('')// &
 		&"    10 rate0=M*140.7*(1.52e-5)*" // trim(exp_ol) //"*(" //trim(ol_k1)//"*(ACT('H+')^"//trim(ol_n1)//")*exp(-("//trim(ol_e1)//"/.008314)*((1.0/TK) - (1.0/298.0))) + "//trim(ol_k2)//"*exp(-("//trim(ol_e2)//"/.008314)*((1.0/TK) - (1.0/298.0))))" //NEW_LINE('')// &
 		!&"    10 rate0=M*250.0*(1.52e-5)*" // trim(exp_pyr) //"*" //trim(pyr_k1)//"*(ACT('H+')^"//trim(pyr_n1)//")*exp(-("//trim(pyr_e1)//"/.008314)*((1.0/TK) - (1.0/298.0)))" //NEW_LINE('')// &
 		&"    20 save rate0 * time" //NEW_LINE('')// &
 		&"-end" //NEW_LINE('')// &
-		
+
 		&"Basalt2" //NEW_LINE('')// &
 		&"-start" //NEW_LINE('')// &
 		&"    10 rate0=M*250.0*(1.52e-5)*" // trim(exp_pyr) //"*(" //trim(pyr_k1)//"*(ACT('H+')^"//trim(pyr_n1)//")*exp(-("//trim(pyr_e1)//"/.008314)*((1.0/TK) - (1.0/298.0))) + "//trim(pyr_k2)//"*exp(-("//trim(pyr_e2)//"/.008314)*((1.0/TK) - (1.0/298.0))))" //NEW_LINE('')// &
 		&"    20 save rate0 * time" //NEW_LINE('')// &
 		&"-end" //NEW_LINE('')// &
-		
+
 		&"Basalt3" //NEW_LINE('')// &
 		&"-start" //NEW_LINE('')// &
 		&"    10 rate0=M*270.0*(1.52e-5)*" // trim(exp_plag) //"*" //trim(plag_k1)//"*(ACT('H+')^"//trim(plag_n1)//")*exp(-("//trim(plag_e1)//"/.008314)*((1.0/TK) - (1.0/298.0)))" //NEW_LINE('')// &
@@ -2263,20 +2315,20 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 		&"KINETICS 1" //NEW_LINE('')// &
 		&"BGlass" //NEW_LINE('')// &
 		! ! seyfried JDF
-		&"-f CaO .1997 SiO2 .847 Al2O3 .138 " //&
+		&"-f CaO .2151 SiO2 .85 Al2O3 .14 " //&
 		! & "Fe2O3 .149 FeO .0075 MgO .1744 K2O .002 " //&
-		& "Fe2O3 .149 MgO .1744 K2O .002 " //&
+		& "Fe2O3 .026 FeO .166 MgO .178 K2O .002 " //&
 		& "Na2O .043" //NEW_LINE('')// &
 		&"-m0 " // trim(s_glass) //NEW_LINE('')// &
-		
+
 		&"Basalt1 " //NEW_LINE('')// &
-		& trim(param_ol_string_in) //NEW_LINE('')// &
+		& '-f MgO 0.85 FeO 0.15 SiO2 1.0' //NEW_LINE('')// &
 ! 		&"-f MgO 2.0 SiO2 1.0 " //NEW_LINE('')// & ! forsterite
 ! 		&"-f FeO 2.0 SiO2 1.0 " //NEW_LINE('')// & ! fayalite
 		&"-m0 " // trim(s_basalt1) //NEW_LINE('')// &
-		
+
 		&"Basalt2 " //NEW_LINE('')// &
-		& trim(param_pyr_string_in) //NEW_LINE('')// &
+		& '-f MgO 2.0 SiO2 2.0' //NEW_LINE('')// &
 ! 		&"-f CaO 1.0 FeO 1.0 SiO2 2.0 " //NEW_LINE('')// & ! hedenbergite
 ! 		&"-f CaO 1.0 MgO 1.0 SiO2 2.0 " //NEW_LINE('')// & ! diopside
 ! 		&"-f FeO 1.0 MgO 1.0 SiO2 2.0 " //NEW_LINE('')// & ! fer mag
@@ -2284,11 +2336,11 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 ! 		&"-f FeO 2.0 SiO2 2.0 " //NEW_LINE('')// & ! ferrosilite
 ! 		&"-f CaO 2.0 SiO2 2.0 " //NEW_LINE('')// & ! wollastonite
 		&"-m0 " // trim(s_basalt2) //NEW_LINE('')// &
-		
+
 		&"Basalt3 " //NEW_LINE('')// &
 ! 		&"-f CaO 1.0 FeO 1.0 Al2O3 1.0 SiO2 2.0 " //NEW_LINE('')// & ! old lab
 ! 		&"-f NaAlSi3O8 0.5 CaAl2Si2O8 0.5 " //NEW_LINE('')// & ! mid plag
-		& trim(param_plag_string_in) //NEW_LINE('')// &
+		& '-f NaAlSi3O8 1.0' //NEW_LINE('')// &
 		&"-m0 " // trim(s_basalt3) //NEW_LINE('')// &
 		&"    -step " // trim(s_timestep) // " in 1" //NEW_LINE('')// &
 
@@ -2392,19 +2444,19 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 		&"    -calculate_values R(sum) R(s_sp)" //NEW_LINE('')// &
 		&"    -time" //NEW_LINE('')// &
 		&"END"
-	   
-	   
-	   
+
+
+
 	   ! INITIALIZE STUFF
 	   id = CreateIPhreeqc()
-	   
-	   
-	   
+
+
+
 	   IF (id.LT.0) THEN
 	   	write(*,*) "weird stop?"
 	   	STOP
 	   END IF
-	   
+
 	   IF (SetSelectedOutputStringOn(id, .TRUE.).NE.IPQ_OK) THEN
 	   	CALL OutputErrorString(id)
 		write(*,*) "BUG 1"
@@ -2420,7 +2472,7 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 	   	write(*,*) temp_in(i)
 	   	STOP
 	   END IF
-	   
+
 	   IF (LoadDatabaseString(id, L5).NE.0) THEN
 	   	CALL OutputErrorString(id)
 		write(*,*) "BUG 2"
@@ -2458,8 +2510,8 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 	   	END IF
 	   	STOP
 	   END IF
-	   
-	   
+
+
 	   ! WRITE AWAY
 	   DO ii=1,GetSelectedOutputStringLineCount(id)
  	   	call GetSelectedOutputStringLine(id, ii, line)
@@ -2471,7 +2523,7 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 ! 	   	   !end if
 ! 	   	end if
 
-	
+
 	   	! MEAT
 	   	if (ii .gt. 1) then
 	   		read(line,*) out_mat(ii,:)
@@ -2486,34 +2538,34 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 	   ! 		end if
 	   	end if
 	   END DO
-	   
-	   
+
+
 	   p_out(i,:) = out_mat(3,:)
 	   !p_out(i,130:186) = out_mat(2,130:186)
 	   p_out(i,124:177) = out_mat(2,124:177)
-	   
-	   
+
+
 
 	   if (GetSelectedOutputStringLineCount(id) .ne. 3) then
 	   	p_out(i,:) = 0.0
 	   	write(*,*) "not = 3"
 	   end if
-	   
+
  	   !write(*,*) p_out(i,189)
-	   
+
 	   ! DESTROY INSTANCE
 	   IF (DestroyIPhreeqc(id).NE.IPQ_OK) THEN
 	   	CALL OutputErrorString(id)
 	   	write(*,*) "cannot be destroyed?"
 	   	STOP
 	   END IF
-	   
+
 	   run_box(i,:) = p_out(i,:)
-	   
+
    end do
-   
-   
-	   
+
+
+
 
 
 ! if (p_out(1,2) .lt. 1.0) then
@@ -2522,24 +2574,24 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 ! 	solute3(6), solute3(7), solute3(8), solute3(9), solute3(10), solute3(11), &
 ! 	solute3(12), solute3(13), solute3(14), 0.0/)
 ! end if
-	
+
 
 	return
 end function run_box
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
 ! ----------------------------------------------------------------------------------%%
 !
 ! GET_UNIT
 !
 ! ----------------------------------------------------------------------------------%%
-	
+
 function get_unit ( )
 
   implicit none
@@ -2572,7 +2624,7 @@ end function get_unit
 function linspace ( n, a_first, a_last )
 
   implicit none
-  integer, intent(in) :: n 
+  integer, intent(in) :: n
    real (4) :: linspace(n)
    integer :: i
    real (4) :: a(n)
@@ -2589,7 +2641,7 @@ function linspace ( n, a_first, a_last )
   end if
   linspace = a
   return
-  
+
 end function linspace
 
 

@@ -27,10 +27,10 @@ interface
 end interface
 
 
-integer, parameter :: g_pri=5, g_sec=108, g_sol=15, g_med=7, n_box=3, alt_num=187
-integer, parameter :: tn = 1000, tp = 100
+integer, parameter :: g_pri=5, g_sec=80, g_sol=15, g_med=7, n_box=3, alt_num=136
+integer, parameter :: tn = 100000, tp = 100
 integer :: i, ii, j, jj
-real(4) :: t_min = 0.0, t_max = 1.57e13
+real(4) :: t_min = 0.0, t_max = 1.57e14
 real(4) :: dt
 real(4) :: solute0(g_sol)
 real(4) :: primary(g_pri,n_box), secondary(g_sec,n_box), solute(g_sol,n_box), medium(g_med,n_box)
@@ -74,6 +74,8 @@ read (param_exp1_string, *) param_exp1
 read (param_sw_diff_string, *) param_sw_diff
 read (param_t_diff_string, *) param_t_diff
 
+param_sw_diff = 10.0**(param_sw_diff)
+param_t_diff = 10.0**(param_t_diff)
 
 param_tra = param_tra/1000.0
 param_tra = 10.0**(param_tra)
@@ -112,9 +114,9 @@ mix = 0.1
 ! mix(:,2) = 3.14e12
 ! mix(:,3) = 3.14e11*2.0
 
-mix(:,1) = param_tra
-mix(:,2) = param_tra/param_xb
-mix(:,3) = param_tra!*2.0
+mix(:,1) = param_sw_diff
+mix(:,2) = param_sw_diff
+mix(:,3) = param_t_diff!*2.0
 
 ! primary minerals [mol]
 primary = 0.0
@@ -149,7 +151,7 @@ solute(1,:) = 8.2 ! ph
 solute(2,:) = .00243 ! Alk
 solute(3,1) = 0.0080 ! water mass
 solute(3,2) = 0.0075 ! water mass
-solute(3,3) = 0.0005 ! water mass
+solute(3,3) = 0.0075 ! water mass
 solute(4,:) = .002100 ! TOTAL C
 solute(5,:) = .01028 ! Ca
 solute(6,:) = .0528 ! Mg
@@ -159,7 +161,7 @@ solute(9,:) = 0.0 ! Fe
 solute(10,:) = .028  ! S(6)
 solute(11,:) = 0.0 ! Si
 solute(12,:) = .540 ! Cl
-solute(13,:) =  1.0e-8!0.0 ! Al
+solute(13,:) =  0.0!0.0 ! Al
 solute(14,:) = .00245 ! inert
 solute(15,:) = 0.0 ! CO3-2
 
@@ -170,7 +172,7 @@ medium(1,:) = .1 ! phiCoarse
 medium(2,:) = 0.0 ! s_sp
 medium(3,1) = 0.008
 medium(3,2) = 0.0075
-medium(3,3) = 0.0005
+medium(3,3) = 0.0075
 
 medium(4,:) = 1.0! reactive fraction now!
 medium(5,:) = 1.0 ! rxn toggle
@@ -213,36 +215,47 @@ run_box_out = run_box(primary, secondary, solute, solute0, medium, g_pri, g_sec,
 		run_box_out(i,7), run_box_out(i,8), run_box_out(i,9), run_box_out(i,10), run_box_out(i,11), run_box_out(i,12), &
 		run_box_out(i,13), run_box_out(i,14), run_box_out(i,15), 0.0/)
 
-		secondary(:,i) = (/ run_box_out(i,16), run_box_out(i,18), run_box_out(i,20), run_box_out(i,22), run_box_out(i,24), run_box_out(i,26), run_box_out(i,28), &
-		run_box_out(i,30), run_box_out(i,32), run_box_out(i,34), run_box_out(i,36), run_box_out(i,38), run_box_out(i,40), run_box_out(i,42), &
-		run_box_out(i,44), run_box_out(i,46), run_box_out(i,48), run_box_out(i,50), run_box_out(i,52), run_box_out(i,54), run_box_out(i,56), &
-		run_box_out(i,58), run_box_out(i,60), run_box_out(i,62), run_box_out(i,64), run_box_out(i,66), run_box_out(i,68), run_box_out(i,70), &
-		run_box_out(i,72), run_box_out(i,74), run_box_out(i,76), run_box_out(i,78), run_box_out(i,80), run_box_out(i,82), run_box_out(i,84), &
-		run_box_out(i,86), run_box_out(i,88), run_box_out(i,90), run_box_out(i,92), run_box_out(i,94), run_box_out(i,96), run_box_out(i,98), &
-		run_box_out(i,100), run_box_out(i,102), run_box_out(i,104), run_box_out(i,106), run_box_out(i,108), run_box_out(i,110), run_box_out(i,112), &
-		run_box_out(i,114), run_box_out(i,116), run_box_out(i,118), run_box_out(i,120), run_box_out(i,122), &
-		!run_box_out(i,114), run_box_out(i,116), run_box_out(i,118), run_box_out(i,120), run_box_out(i,122), run_box_out(i,124), &
-		! run_box_out(i,126), run_box_out(i,128), &
-		!run_box_out(i,126),&
-		run_box_out(i,124), run_box_out(i,125),&
-		run_box_out(i,126), run_box_out(i,127),&
-		run_box_out(i,128), run_box_out(i,129),&
-		run_box_out(i,130), run_box_out(i,131), run_box_out(i,132), run_box_out(i,133), run_box_out(i,134), run_box_out(i,135), run_box_out(i,136), &
-		run_box_out(i,137), run_box_out(i,138), run_box_out(i,139), run_box_out(i,140), &
-		run_box_out(i,141), run_box_out(i,142), run_box_out(i,143), run_box_out(i,144), run_box_out(i,145), run_box_out(i,146), &
-		run_box_out(i,147), run_box_out(i,148), run_box_out(i,149), run_box_out(i,150), run_box_out(i,151), run_box_out(i,152), &
-		run_box_out(i,153), run_box_out(i,154), run_box_out(i,155), run_box_out(i,156), run_box_out(i,157), run_box_out(i,158), &
-		run_box_out(i,159), run_box_out(i,160), run_box_out(i,161), run_box_out(i,162), run_box_out(i,163), run_box_out(i,164), &
-		run_box_out(i,165), run_box_out(i,166), run_box_out(i,167), run_box_out(i,168), run_box_out(i,169), run_box_out(i,170), &
-		run_box_out(i,171), run_box_out(i,172), run_box_out(i,173), run_box_out(i,174), run_box_out(i,175), run_box_out(i,176), &
-		run_box_out(i,177)/)
-		! run_box_out(i,177), run_box_out(i,178), run_box_out(i,179), run_box_out(i,180), run_box_out(i,181), run_box_out(i,182), &
-		! run_box_out(i,183), run_box_out(i,184), run_box_out(i,185), run_box_out(i,186)/)
-! 		run_box_out(i,183)/)
+		! write(*,*) "timestep:" , j , " " , 'n_box:' , i
+		! write(*,*) solute(:,i)
+		! write(*,*) " "
 
-		primary(:,i) = (/ 0.0*run_box_out(i,187), run_box_out(i,178), run_box_out(i,180), run_box_out(i,182), run_box_out(i,184)/)
+! 		secondary(:,i) = (/ run_box_out(i,16), run_box_out(i,18), run_box_out(i,20), run_box_out(i,22), run_box_out(i,24), run_box_out(i,26), run_box_out(i,28), &
+! 		run_box_out(i,30), run_box_out(i,32), run_box_out(i,34), run_box_out(i,36), run_box_out(i,38), run_box_out(i,40), run_box_out(i,42), &
+! 		run_box_out(i,44), run_box_out(i,46), run_box_out(i,48), run_box_out(i,50), run_box_out(i,52), run_box_out(i,54), run_box_out(i,56), &
+! 		run_box_out(i,58), run_box_out(i,60), run_box_out(i,62), run_box_out(i,64), run_box_out(i,66), run_box_out(i,68), run_box_out(i,70), &
+! 		run_box_out(i,72), run_box_out(i,74), run_box_out(i,76), run_box_out(i,78), run_box_out(i,80), run_box_out(i,82), run_box_out(i,84), &
+! 		run_box_out(i,86), run_box_out(i,88), run_box_out(i,90), run_box_out(i,92), run_box_out(i,94), run_box_out(i,96), run_box_out(i,98), &
+! 		run_box_out(i,100), run_box_out(i,102), run_box_out(i,104), run_box_out(i,106), run_box_out(i,108), run_box_out(i,110), run_box_out(i,112), &
+! 		run_box_out(i,114), run_box_out(i,116), run_box_out(i,118), run_box_out(i,120), run_box_out(i,122), &
+! 		!run_box_out(i,114), run_box_out(i,116), run_box_out(i,118), run_box_out(i,120), run_box_out(i,122), run_box_out(i,124), &
+! 		! run_box_out(i,126), run_box_out(i,128), &
+! 		!run_box_out(i,126),&
+! 		run_box_out(i,124), run_box_out(i,125),&
+! 		run_box_out(i,126), run_box_out(i,127),&
+! 		run_box_out(i,128), run_box_out(i,129),&
+! 		run_box_out(i,130), run_box_out(i,131), run_box_out(i,132), run_box_out(i,133), run_box_out(i,134), run_box_out(i,135), run_box_out(i,136), &
+! 		run_box_out(i,137), run_box_out(i,138), run_box_out(i,139), run_box_out(i,140), &
+! 		run_box_out(i,141), run_box_out(i,142), run_box_out(i,143), run_box_out(i,144), run_box_out(i,145), run_box_out(i,146), &
+! 		run_box_out(i,147), run_box_out(i,148), run_box_out(i,149), run_box_out(i,150), run_box_out(i,151), run_box_out(i,152), &
+! 		run_box_out(i,153), run_box_out(i,154), run_box_out(i,155), run_box_out(i,156), run_box_out(i,157), run_box_out(i,158), &
+! 		run_box_out(i,159), run_box_out(i,160), run_box_out(i,161), run_box_out(i,162), run_box_out(i,163), run_box_out(i,164), &
+! 		run_box_out(i,165), run_box_out(i,166), run_box_out(i,167), run_box_out(i,168), run_box_out(i,169), run_box_out(i,170), &
+! 		run_box_out(i,171), run_box_out(i,172), run_box_out(i,173), run_box_out(i,174), run_box_out(i,175), run_box_out(i,176), &
+! 		run_box_out(i,177)/)
+! 		! run_box_out(i,177), run_box_out(i,178), run_box_out(i,179), run_box_out(i,180), run_box_out(i,181), run_box_out(i,182), &
+! 		! run_box_out(i,183), run_box_out(i,184), run_box_out(i,185), run_box_out(i,186)/)
+! ! 		run_box_out(i,183)/)
 
-		medium(1:4,i) = (/ run_box_out(i,187), run_box_out(i,187), run_box_out(i,4), run_box_out(i,187)/)
+		DO ii = 1,g_sec/2
+			secondary(ii,i) = run_box_out(i,2*ii+14)
+		END DO
+		! write(*,*) "timestep:" , j , " " , 'n_box:' , i
+		! write(*,*) secondary(:,i)
+		! write(*,*) " "
+
+		primary(:,i) = (/ 0.0*run_box_out(i,136), run_box_out(i,127), run_box_out(i,129), run_box_out(i,131), run_box_out(i,133)/)
+
+		!medium(1:4,i) = (/ run_box_out(i,187), run_box_out(i,187), run_box_out(i,4), run_box_out(i,187)/)
 
 	end do
 

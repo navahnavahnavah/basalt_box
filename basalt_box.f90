@@ -28,7 +28,7 @@ end interface
 
 
 integer, parameter :: g_pri=5, g_sec=80, g_sol=15, g_med=7, n_box=3, alt_num=136
-integer, parameter :: tn = 100000, tp = 100
+integer, parameter :: tn = 10000, tp = 100
 integer :: i, ii, j, jj
 real(4) :: t_min = 0.0, t_max = 1.57e14
 real(4) :: dt
@@ -149,9 +149,12 @@ secondary = 0.0
 ! from elderfield 1999, and other places
 solute(1,:) = 8.2 ! ph
 solute(2,:) = .00243 ! Alk
-solute(3,1) = 0.0080 ! water mass
-solute(3,2) = 0.0075 ! water mass
-solute(3,3) = 0.0075 ! water mass
+! solute(3,1) = 0.0080 ! water mass
+! solute(3,2) = 0.0075 ! water mass
+! solute(3,3) = 0.0075 ! water mass
+solute(3,1) = 0.006 ! water mass
+solute(3,2) = 0.0055 ! water mass
+solute(3,3) = 0.0055 ! water mass
 solute(4,:) = .002100 ! TOTAL C
 solute(5,:) = .01028 ! Ca
 solute(6,:) = .0528 ! Mg
@@ -170,9 +173,12 @@ solute0 = solute(:,1)
 
 medium(1,:) = .1 ! phiCoarse
 medium(2,:) = 0.0 ! s_sp
-medium(3,1) = 0.008
-medium(3,2) = 0.0075
-medium(3,3) = 0.0075
+! medium(3,1) = 0.008
+! medium(3,2) = 0.0075
+! medium(3,3) = 0.0075
+medium(3,1) = 0.006
+medium(3,2) = 0.0055
+medium(3,3) = 0.0055
 
 medium(4,:) = 1.0! reactive fraction now!
 medium(5,:) = 1.0 ! rxn toggle

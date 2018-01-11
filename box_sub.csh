@@ -10,7 +10,7 @@
 # you want to run.
 #
 # set the name of the job
-#PBS -N ee_mix_1e14.5
+##PBS -N jj_mix_1e14.5
 #
 # set the output and error files
 #PBS -o /data/navah/bb_output/$PBS_JOBNAME/e_out.txt
@@ -20,7 +20,7 @@
 # to use per node
 
 
-#PBS -l nodes=compute-1-5:ppn=1
+#PBS -l nodes=compute-0-1:ppn=1
 
 # in this example, I'm using the intel compilers and mvapich2
 #
@@ -42,12 +42,12 @@ set PARAM_XB='-2.00'
 set PARAM_EXP='0.8e-4'
 set PARAM_EXP1='5.0'
 
-set PARAM_SW_DIFF = '14.5'
+#set PARAM_SW_DIFF = '14.5'
 set PARAM_T_DIFF = '2.0e10'
 
 
 
-set PARAM_PATH = '/data/navah/bb_output/'$PBS_JOBNAME'/'
+set PARAM_PATH = '/data/navah/bb_output/swi_b88/'$PBS_JOBNAME'/'
 
 echo $PARAM_PATH
 # set PROGNAME to the name of your program

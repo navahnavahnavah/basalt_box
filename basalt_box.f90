@@ -28,7 +28,7 @@ end interface
 
 
 integer, parameter :: g_pri=5, g_sec=80, g_sol=15, g_med=7, n_box=3, alt_num=136
-integer, parameter :: tn = 10000, tp = 100
+integer, parameter :: tn = 50000, tp = 1000
 integer :: i, ii, j, jj
 real(4) :: t_min = 0.0, t_max = 1.57e14
 real(4) :: dt
@@ -42,13 +42,16 @@ real(4) :: temp_100_ht(tn), temp_100_2ht(tn)
 character(len=300) :: path
 character(len=300) :: s_i
 integer :: in
+real(4) :: t_vol_s_0 = 0.006
+real(4) :: t_vol_a_0 = 0.006
+real(4) :: t_vol_b_0 = 0.006
 
 ! RUNTIME PARAMETERS
 character(len=300) :: param_path, param_temp_string, param_tra_string, param_xb_string
 character(len=300) :: param_exp_string, param_exp1_string
-character(len=300) :: param_sw_diff_string, param_t_diff_string
+character(len=300) :: param_sw_diff_string, param_t_diff_string, param_q_string
 real(4) :: param_temp, param_tra, param_xb, param_exp, param_exp1
-real(4) :: param_sw_diff, param_t_diff
+real(4) :: param_sw_diff, param_t_diff, param_q
 
 
 
@@ -63,6 +66,7 @@ call getarg(6,param_exp1_string)
 
 call getarg(7,param_sw_diff_string)
 call getarg(8,param_t_diff_string)
+call getarg(8,param_q_string)
 
 
 read (param_temp_string, *) param_temp
@@ -71,10 +75,15 @@ read (param_xb_string, *) param_xb
 read (param_exp_string, *) param_exp
 read (param_exp1_string, *) param_exp1
 
+
 read (param_sw_diff_string, *) param_sw_diff
+write(*,*) "PARAM_SW_DIFF_STRING: " , param_sw_diff_string
 read (param_t_diff_string, *) param_t_diff
 
+
+write(*,*) "PARAM_SW_DIFF BEFORE: " , param_sw_diff
 param_sw_diff = 10.0**(param_sw_diff)
+write(*,*) "PARAM_SW_DIFF AFTER: " , param_sw_diff
 param_t_diff = 10.0**(param_t_diff)
 
 param_tra = param_tra/1000.0
@@ -85,6 +94,12 @@ param_xb = 10.0**(param_xb)
 path = param_path !'/data/navah/summer16/basalt_box/output/test0/'
 
 
+read (param_q_string, *) param_q
+
+param_sw_diff = (3.14e7)*(t_vol_s_0/1000.0)/((1.0e-9)*param_q)
+
+write(*,*) "PARAM_Q: " , param_q
+write(*,*) "PARAM_SW_DIFF = f(PARAM_Q)" , param_sw_diff
 
 
 ! current temp stages in use
@@ -107,7 +122,7 @@ dt = (t_max-t_min)/real(tn - 1,kind=4)
 
 area = 1.0
 phi = 0.1
-mix = 0.1
+!mix = 0.1
 !temps = param_temp!50.0
 
 ! mix(:,1) = 3.14e11
@@ -131,12 +146,12 @@ primary(5,1) = 1.0 ! basaltic glass
 primary(2,2) = 0.0 ! plagioclase
 primary(3,2) = 0.0 ! pyroxene
 primary(4,2) = 0.0 ! olivine
-primary(5,2) = 0.5 ! basaltic glass
+primary(5,2) = 1.0 ! basaltic glass
 
 primary(2,3) = 0.0 ! plagioclase
 primary(3,3) = 0.0 ! pyroxene
 primary(4,3) = 0.0 ! olivine
-primary(5,3) = 0.5 ! basaltic glass
+primary(5,3) = 1.0 ! basaltic glass
 
 
 ! secondary minerals [mol]
@@ -152,9 +167,9 @@ solute(2,:) = .00243 ! Alk
 ! solute(3,1) = 0.0080 ! water mass
 ! solute(3,2) = 0.0075 ! water mass
 ! solute(3,3) = 0.0075 ! water mass
-solute(3,1) = 0.006 ! water mass
-solute(3,2) = 0.0055 ! water mass
-solute(3,3) = 0.0055 ! water mass
+solute(3,1) = t_vol_s_0 ! water mass
+solute(3,2) = t_vol_a_0 ! water mass
+solute(3,3) = t_vol_b_0 ! water mass
 solute(4,:) = .002100 ! TOTAL C
 solute(5,:) = .01028 ! Ca
 solute(6,:) = .0528 ! Mg
@@ -176,9 +191,9 @@ medium(2,:) = 0.0 ! s_sp
 ! medium(3,1) = 0.008
 ! medium(3,2) = 0.0075
 ! medium(3,3) = 0.0075
-medium(3,1) = 0.006
-medium(3,2) = 0.0055
-medium(3,3) = 0.0055
+medium(3,1) = t_vol_s_0
+medium(3,2) = t_vol_a_0
+medium(3,3) = t_vol_b_0
 
 medium(4,:) = 1.0! reactive fraction now!
 medium(5,:) = 1.0 ! rxn toggle
@@ -220,6 +235,28 @@ run_box_out = run_box(primary, secondary, solute, solute0, medium, g_pri, g_sec,
 		solute(:,i) = (/ run_box_out(i,2), run_box_out(i,3), run_box_out(i,4), run_box_out(i,5), run_box_out(i,6), &
 		run_box_out(i,7), run_box_out(i,8), run_box_out(i,9), run_box_out(i,10), run_box_out(i,11), run_box_out(i,12), &
 		run_box_out(i,13), run_box_out(i,14), run_box_out(i,15), 0.0/)
+
+		!# volume scaling
+		if (i == 1) then
+			do ii = 4,g_sol
+				solute(ii,i) = solute(ii,i)*t_vol_s_0/solute(3,i)
+			end do
+			solute(3,i) = t_vol_s_0
+		end if
+
+		if (i == 2) then
+			do ii = 4,g_sol
+				solute(ii,i) = solute(ii,i)*t_vol_a_0/solute(3,i)
+			end do
+			solute(3,i) = t_vol_a_0
+		end if
+
+		if (i == 3) then
+			do ii = 4,g_sol
+				solute(ii,i) = solute(ii,i)*t_vol_b_0/solute(3,i)
+			end do
+			solute(3,i) = t_vol_b_0
+		end if
 
 		! write(*,*) "timestep:" , j , " " , 'n_box:' , i
 		! write(*,*) solute(:,i)
@@ -279,15 +316,13 @@ run_box_out = run_box(primary, secondary, solute, solute0, medium, g_pri, g_sec,
 end do
 
 
-! WRITE EVERYTHING TO FILE
-
 ! writer = write_vec ( tp, primary_mat(), trim(path) // 'y.txt' )
 
-
+!# WRITE TO FILE
 writer = write_matrix(n_box, tp, primary_mat(5,:,:), trim(path) // 'z_primary_mat5.txt')
-writer = write_matrix(n_box, tp, primary_mat(4,:,:), trim(path) // 'z_primary_mat4.txt')
-writer = write_matrix(n_box, tp, primary_mat(3,:,:), trim(path) // 'z_primary_mat3.txt')
-writer = write_matrix(n_box, tp, primary_mat(2,:,:), trim(path) // 'z_primary_mat2.txt')
+! writer = write_matrix(n_box, tp, primary_mat(4,:,:), trim(path) // 'z_primary_mat4.txt')
+! writer = write_matrix(n_box, tp, primary_mat(3,:,:), trim(path) // 'z_primary_mat3.txt')
+! writer = write_matrix(n_box, tp, primary_mat(2,:,:), trim(path) // 'z_primary_mat2.txt')
 
 writer = write_matrix(n_box, tp, solute_mat(1,:,:), trim(path) // 'z_solute_ph.txt')
 writer = write_matrix(n_box, tp, solute_mat(2,:,:), trim(path) // 'z_solute_alk.txt')

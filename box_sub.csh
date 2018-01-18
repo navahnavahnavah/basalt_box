@@ -13,14 +13,16 @@
 ##PBS -N jj_mix_1e14.5
 #
 # set the output and error files
-#PBS -o /data/navah/bb_output/$PBS_JOBNAME/e_out.txt
-#PBS -e /data/navah/bb_output/$PBS_JOBNAME/e_err.txt
+
+## CHANGE END OF PATH HERE!
+#PBS -o /data/navah/bb_output/q_group/$PBS_JOBNAME/e_out.txt
+#PBS -e /data/navah/bb_output/q_group/$PBS_JOBNAME/e_err.txt
 #PBS -m abe -M navah@uchicago.edu
 # set the number of nodes to use, and number of processors
 # to use per node
 
 
-#PBS -l nodes=compute-0-1:ppn=1
+#PBS -l nodes=compute-1-6:ppn=1
 
 # in this example, I'm using the intel compilers and mvapich2
 #
@@ -39,15 +41,17 @@ set PARAM_TEMP='100'
 
 set PARAM_TRA='11.00'
 set PARAM_XB='-2.00'
-set PARAM_EXP='0.8e-4'
-set PARAM_EXP1='5.0'
+set PARAM_EXP='1.2e-4'
+set PARAM_EXP1='1.0e-15'
 
-#set PARAM_SW_DIFF = '14.5'
-set PARAM_T_DIFF = '2.0e10'
+set PARAM_SW_DIFF = '11.0'
+
+#set PARAM_Q = '1.0'
+#set PARAM_T_DIFF = '11.5'
 
 
-
-set PARAM_PATH = '/data/navah/bb_output/swi_b88/'$PBS_JOBNAME'/'
+## CHANGE END OF PATH HERE!
+set PARAM_PATH = '/data/navah/bb_output/q_group/'$PBS_JOBNAME'/'
 
 echo $PARAM_PATH
 # set PROGNAME to the name of your program
@@ -113,7 +117,7 @@ cd ${WORKDIR}
 #echo $PARAM_PATH'secondary_mat*.txt'
 find $PARAM_PATH -name 'z_secondary_mat*.txt' -exec rm -f {} \;
 wait
-${LAUNCH} -n {$NCPU} -hostfile ${PBS_NODEFILE} ${WORKDIR}/${PROGNAME} ${PARAM_PATH} ${PARAM_TEMP} ${PARAM_TRA} ${PARAM_XB} ${PARAM_EXP} ${PARAM_EXP1} ${PARAM_SW_DIFF} ${PARAM_T_DIFF}
+${LAUNCH} -n {$NCPU} -hostfile ${PBS_NODEFILE} ${WORKDIR}/${PROGNAME} ${PARAM_PATH} ${PARAM_TEMP} ${PARAM_TRA} ${PARAM_XB} ${PARAM_EXP} ${PARAM_EXP1} ${PARAM_SW_DIFF} ${PARAM_T_DIFF} ${PARAM_Q}
 
 
 

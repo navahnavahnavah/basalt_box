@@ -1,28 +1,87 @@
 #!/bin/bash
 
-
-declare -a node_array=('compute-0-0:ppn=1' 'compute-0-1:ppn=1' 'compute-0-2:ppn=1' 'compute-0-3:ppn=1' 'compute-0-4:ppn=1' 'compute-1-0:ppn=1' 'compute-1-1:ppn=1')
+##
+declare -a node_array=('compute-0-0:ppn=1' 'compute-0-1:ppn=1' 'compute-0-2:ppn=1' 'compute-0-3:ppn=1' 'compute-0-4:ppn=1' 'compute-1-0:ppn=1' 'compute-1-1:ppn=1' 'compute-1-2:ppn=1' 'compute-1-3:ppn=1' 'compute-1-4:ppn=1' 'compute-1-5:ppn=1' 'compute-1-6:ppn=1' 'compute-1-7:ppn=1' 'compute-1-8:ppn=1')
 node_length=${#node_array[@]}
+cut=8
+
 
 ii=0
-for q in "1.0" "2.0" "3.0" "4.0"; do
-	for diff in "10.00" "10.25" "10.50" "10.75" "11.00" "11.25" "11.50" "11.75"; do
+for q in "0.5" "1.0" "1.5" "2.0" "2.5" "3.0" "3.5" "4.0" "4.5"; do
+	for diff in "10.00" "10.25" "10.50" "10.75" "11.00" "11.25" "11.50" "11.75" "12.00"; do
 		ii=$(( $ii + 1 ))
 		##echo $ii
 
-		if [ "$ii" -lt 11 ]; then
+		# if [ "$ii" -lt "$cut" ]; then
+		# 	this_node=${node_array[0]}
+		# 	##echo $this_node
+		# fi
+        #
+		# if [ "$ii" -ge 10 ] && [ "$ii" -lt 20 ]; then
+		# 	this_node=${node_array[1]}
+		# 	##echo $this_node
+		# fi
+        #
+		# if [ "$ii" -ge 20 ] && [ "$ii" -lt 30 ]; then
+		# 	this_node=${node_array[2]}
+		# 	##echo $this_node
+		# fi
+        #
+		# if [ "$ii" -ge 30 ] && [ "$ii" -lt 40 ]; then
+		# 	this_node=${node_array[3]}
+		# 	##echo $this_node
+		# fi
+
+		if (( $ii > 0 )); then
 			this_node=${node_array[0]}
-			##echo $this_node
 		fi
 
-		if [ "$ii" -ge 11 ] && [ "$ii" -lt 22 ]; then
+		if (( $ii > $cut )); then
 			this_node=${node_array[1]}
-			##echo $this_node
 		fi
 
-		if [ "$ii" -ge 22 ] && [ "$ii" -lt 33 ]; then
+		if [ "$ii" -gt $(($cut * 2)) ]; then
 			this_node=${node_array[2]}
-			##echo $this_node
+		fi
+
+		if [ "$ii" -gt $(($cut * 3)) ]; then
+			this_node=${node_array[3]}
+		fi
+
+		if [ "$ii" -gt $(($cut * 4)) ]; then
+			this_node=${node_array[4]}
+		fi
+
+		if [ "$ii" -gt $(($cut * 5)) ]; then
+			this_node=${node_array[5]}
+		fi
+
+		if [ "$ii" -gt $(($cut * 6)) ]; then
+			this_node=${node_array[6]}
+		fi
+
+		if [ "$ii" -gt $(($cut * 7)) ]; then
+			this_node=${node_array[7]}
+		fi
+
+		if [ "$ii" -gt $(($cut * 8)) ]; then
+			this_node=${node_array[8]}
+		fi
+
+		if [ "$ii" -gt $(($cut * 9)) ]; then
+			this_node=${node_array[9]}
+		fi
+
+		if [ "$ii" -gt $(($cut * 10)) ]; then
+			this_node=${node_array[10]}
+		fi
+
+		if [ "$ii" -gt $(($cut * 11)) ]; then
+			this_node=${node_array[11]}
+		fi
+
+		if [ "$ii" -gt $(($cut * 12)) ]; then
+			this_node=${node_array[12]}
 		fi
 
 		echo "q_"$q"_diff_"$diff

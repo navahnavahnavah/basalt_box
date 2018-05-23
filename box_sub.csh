@@ -15,14 +15,14 @@
 # set the output and error files
 
 ## CHANGE END OF PATH HERE!
-#PBS -o /data/navah/bb_output/q_group/$PBS_JOBNAME/e_out.txt
-#PBS -e /data/navah/bb_output/q_group/$PBS_JOBNAME/e_err.txt
+#PBS -o /data/navah/bb_output/z_group_40_base/$PBS_JOBNAME/e_out.txt
+#PBS -e /data/navah/bb_output/z_group_40_base/$PBS_JOBNAME/e_err.txt
 #PBS -m abe -M navah@uchicago.edu
 # set the number of nodes to use, and number of processors
 # to use per node
 
 
-#PBS -l nodes=compute-1-6:ppn=1
+###PBS -l nodes=compute-1-6:ppn=1
 
 # in this example, I'm using the intel compilers and mvapich2
 #
@@ -37,21 +37,21 @@ module load mpi/mvapich2/intel
 
 
 # model parameters go here i guess
-set PARAM_TEMP='100'
+set PARAM_TEMP     = '100'
 
-set PARAM_TRA='11.00'
-set PARAM_XB='-2.00'
-set PARAM_EXP='1.2e-4'
-set PARAM_EXP1='1.0e-15'
+set PARAM_TRA      = '11.00'
+set PARAM_XB       = '-2.00'
+set PARAM_EXP      = '2.4e-4'
+set PARAM_EXP1     = '1.0e-15'
 
-set PARAM_SW_DIFF = '11.0'
+set PARAM_SW_DIFF  = '11.0'
 
 #set PARAM_Q = '1.0'
 #set PARAM_T_DIFF = '11.5'
 
 
 ## CHANGE END OF PATH HERE!
-set PARAM_PATH = '/data/navah/bb_output/q_group/'$PBS_JOBNAME'/'
+set PARAM_PATH = '/data/navah/bb_output/z_group_40_base/'$PBS_JOBNAME'/'
 
 echo $PARAM_PATH
 # set PROGNAME to the name of your program

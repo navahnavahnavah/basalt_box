@@ -1,36 +1,19 @@
 #!/bin/bash
 
 ##
-declare -a node_array=('compute-0-0:ppn=1' 'compute-0-1:ppn=1' 'compute-0-2:ppn=1' 'compute-0-3:ppn=1' 'compute-0-4:ppn=1' 'compute-1-0:ppn=1' 'compute-1-1:ppn=1' 'compute-1-2:ppn=1' 'compute-1-3:ppn=1' 'compute-1-4:ppn=1' 'compute-1-5:ppn=1' 'compute-1-6:ppn=1' 'compute-1-7:ppn=1' 'compute-1-8:ppn=1')
+#declare -a node_array=('compute-0-0:ppn=1' 'compute-0-1:ppn=1' 'compute-0-2:ppn=1' 'compute-0-3:ppn=1' 'compute-0-4:ppn=1' 'compute-1-0:ppn=1' 'compute-1-1:ppn=1' 'compute-1-2:ppn=1' 'compute-1-3:ppn=1' 'compute-1-4:ppn=1' 'compute-1-5:ppn=1' 'compute-1-6:ppn=1' 'compute-1-7:ppn=1' 'compute-1-8:ppn=1')
+
+declare -a node_array=('compute-0-4:ppn=1' 'compute-1-0:ppn=1' 'compute-1-1:ppn=1' 'compute-1-2:ppn=1'  'compute-1-7:ppn=1' 'compute-1-6:ppn=1'  'compute-0-0:ppn=1' 'compute-0-1:ppn=1' 'compute-0-2:ppn=1' 'compute-0-3:ppn=1' 'compute-1-3:ppn=1' 'compute-1-4:ppn=1' 'compute-1-5:ppn=1' 'compute-1-10:ppn=1' 'compute-1-9:ppn=1' 'compute-1-8:ppn=1')
 node_length=${#node_array[@]}
-cut=8
+cut=11
 
 
 ii=0
-for q in "0.5" "1.0" "1.5" "2.0" "2.5" "3.0" "3.5" "4.0" "4.5"; do
-	for diff in "10.00" "10.25" "10.50" "10.75" "11.00" "11.25" "11.50" "11.75" "12.00"; do
+for q in "0.5" "1.0" "1.5" "2.0" "2.5" "3.0" "3.5" "4.0" "4.5" "5.0"; do
+	# for diff in "10.00" "10.25" "10.50" "10.75" "11.00" "11.25" "11.50" "11.75" "12.00"; do
+	for diff in "2.00" "2.25" "2.50" "2.75" "3.00" "3.25" "3.50" "3.75" "4.00" "4.25" "4.50"; do
 		ii=$(( $ii + 1 ))
 		##echo $ii
-
-		# if [ "$ii" -lt "$cut" ]; then
-		# 	this_node=${node_array[0]}
-		# 	##echo $this_node
-		# fi
-        #
-		# if [ "$ii" -ge 10 ] && [ "$ii" -lt 20 ]; then
-		# 	this_node=${node_array[1]}
-		# 	##echo $this_node
-		# fi
-        #
-		# if [ "$ii" -ge 20 ] && [ "$ii" -lt 30 ]; then
-		# 	this_node=${node_array[2]}
-		# 	##echo $this_node
-		# fi
-        #
-		# if [ "$ii" -ge 30 ] && [ "$ii" -lt 40 ]; then
-		# 	this_node=${node_array[3]}
-		# 	##echo $this_node
-		# fi
 
 		if (( $ii > 0 )); then
 			this_node=${node_array[0]}
@@ -82,6 +65,18 @@ for q in "0.5" "1.0" "1.5" "2.0" "2.5" "3.0" "3.5" "4.0" "4.5"; do
 
 		if [ "$ii" -gt $(($cut * 12)) ]; then
 			this_node=${node_array[12]}
+		fi
+
+		if [ "$ii" -gt $(($cut * 13)) ]; then
+			this_node=${node_array[13]}
+		fi
+
+		if [ "$ii" -gt $(($cut * 14)) ]; then
+			this_node=${node_array[14]}
+		fi
+
+		if [ "$ii" -gt $(($cut * 15)) ]; then
+			this_node=${node_array[15]}
 		fi
 
 		echo "q_"$q"_diff_"$diff

@@ -28,7 +28,7 @@ end interface
 
 
 integer, parameter :: g_pri=5, g_sec=80, g_sol=15, g_med=7, n_box=3, alt_num=136
-integer, parameter :: tn = 50000, tp = 1000
+integer, parameter :: tn = 200000, tp = 1000
 integer :: i, ii, j, jj
 real(4) :: t_min = 0.0, t_max = 1.57e14
 real(4) :: dt
@@ -66,7 +66,7 @@ call getarg(6,param_exp1_string)
 
 call getarg(7,param_sw_diff_string)
 call getarg(8,param_t_diff_string)
-call getarg(8,param_q_string)
+call getarg(9,param_q_string)
 
 
 read (param_temp_string, *) param_temp
@@ -84,7 +84,7 @@ read (param_t_diff_string, *) param_t_diff
 write(*,*) "PARAM_SW_DIFF BEFORE: " , param_sw_diff
 param_sw_diff = 10.0**(param_sw_diff)
 write(*,*) "PARAM_SW_DIFF AFTER: " , param_sw_diff
-param_t_diff = 10.0**(param_t_diff)
+param_t_diff = (3.14e7)*(10.0**(param_t_diff))
 
 param_tra = param_tra/1000.0
 param_tra = 10.0**(param_tra)
@@ -130,7 +130,7 @@ phi = 0.1
 ! mix(:,3) = 3.14e11*2.0
 
 mix(:,1) = param_sw_diff
-mix(:,2) = param_sw_diff
+mix(:,2) = param_sw_diff/2.0
 mix(:,3) = param_t_diff!*2.0
 
 ! primary minerals [mol]
@@ -205,7 +205,7 @@ medium(7,:) = 0.0 ! y-coord
 
 do j = 1,tn
 
-	write(*,*) "timestep:" , j
+	! write(*,*) "timestep:" , j
 
 	if (mod(j,tn/100) .eq. 0) then
 			OPEN(UNIT=88, status = 'replace', FILE=trim(path) // 'dynamicSubStep.txt')

@@ -27,7 +27,7 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 	INTEGER(KIND=4) :: id
 	real(4) :: out_mat(4,alt_num)
 	!real(4) :: solute_inter(tn)
-	character(len=25) :: s_precip = "0.0"
+	character(len=25) :: s_precip = "0.00"
 
 	! STRINGS
 	character(len=25) :: s_verm_ca, s_analcime, s_phillipsite, s_clinozoisite, s_verm_na
@@ -66,6 +66,9 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 	character(len=25) :: exp_ol1, exp_ol2, exp_ol3, exp_ol
 	character(len=25) :: exp_pyr1, exp_pyr2, exp_pyr3, exp_pyr
 	character(len=25) :: exp_plag1, exp_plag2, exp_plag3, exp_plag
+
+	!# limiter declare
+	! real(4) :: sec_vol_total, pri_vol_total
 
 	exp_ol1 = "0.01"
 	exp_ol2 = "0.001"
@@ -2038,8 +2041,8 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 ! 	write(*,*) "m2" , dt/mix_in(2)
 ! 	write(*,*) "m" , dt/mix_in(3)
 
-	!kinetics = " precipitate_only"
-	kinetics = " "
+	kinetics = " precipitate_only"
+	!kinetics = " "
 
 	! write(*,*) "mix_in(1)" , mix_in(1)
 	! write(*,*) "dt" , dt
@@ -2063,7 +2066,13 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 			! solute_inter = solute_in(n,1)
 			solute_in(:,1) = solute_step(:,1) * (1.0 - (dt/mix_in(1)) ) + solute0_in * (dt/mix_in(1))
 
+			!# FIX [K] OR [Mg]
+			! solute_in(8,1) = solute0_in(8)
+			! solute_in(6,1) = solute0_in(6)
+
 		end if
+
+
 
 		if (i == 2) then
 			! step 1 : put SW into ch_a_0, make ch_a_1
@@ -2074,6 +2083,10 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 			solute_step(4:,2) = solute_in(4:,2)
 
 			solute_in(:,2) = solute_in(:,2) * (1.0 - (dt/mix_in(3)) ) + solute_step(:,3) * (dt/mix_in(3))
+
+			!# FIX [K] OR [Mg]
+			! solute_in(8,2) = solute0_in(8)
+			! solute_in(6,2) = solute0_in(6)
 
 		end if
 
@@ -2086,6 +2099,10 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 
 			! step 3 : put ch_a_1 into ch_b_0
 			solute_in(:,3) = solute_step(:,3) * (1.0 - (dt/mix_in(3)) ) + solute_step(:,2) * (dt/mix_in(3))
+
+			!# FIX [K] OR [Mg]
+			! solute_in(8,3) = solute0_in(8)
+			! solute_in(6,3) = solute0_in(6)
 		end if
 
     ! write(*,*) "n_box: " , i
@@ -2238,13 +2255,13 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 		input_string = TRIM(input_string) //      "    Montmor-Na " // TRIM(s_precip) // TRIM(s_mont_na) // kinetics //NEW_LINE('') ! smectite
 		input_string = TRIM(input_string) //      "    Montmor-Mg " // TRIM(s_precip) // TRIM(s_mont_mg) // kinetics //NEW_LINE('') ! smectite
 		!input_string = TRIM(input_string) //      "    Montmor-Ca " // TRIM(s_precip) // TRIM(s_mont_ca) // kinetics //NEW_LINE('') ! smectite
-		input_string = TRIM(input_string) //      "    Smectite-high-Fe-Mg " // trim(s_precip) // trim(s_smectite) // kinetics //NEW_LINE('') ! smectite
+		!input_string = TRIM(input_string) //      "    Smectite-high-Fe-Mg " // trim(s_precip) // trim(s_smectite) // kinetics //NEW_LINE('') ! smectite
 		input_string = TRIM(input_string) //      "    Vermiculite-Na " // TRIM(s_precip) // TRIM(s_verm_na) // kinetics //NEW_LINE('') ! clay
 		!input_string = TRIM(input_string) //      "    Vermiculite-Ca " // TRIM(s_precip) // TRIM(s_verm_ca) // kinetics //NEW_LINE('') ! clay
 		input_string = TRIM(input_string) //      "    Vermiculite-Mg " // TRIM(s_precip) // TRIM(s_verm_mg) // kinetics //NEW_LINE('') ! clay
 		input_string = TRIM(input_string) //      "    Hematite " // TRIM(s_precip) // TRIM(s_hematite) // kinetics //NEW_LINE('') ! iron oxide
 		!input_string = TRIM(input_string) //      "    Epidote  " // trim(s_precip) // trim(s_epidote) // kinetics //NEW_LINE('')
-		input_string = TRIM(input_string) //      "    Smectite-low-Fe-Mg " // trim(s_precip) // trim(s_smectite_low) // kinetics //NEW_LINE('') ! smectite
+		!input_string = TRIM(input_string) //      "    Smectite-low-Fe-Mg " // trim(s_precip) // trim(s_smectite_low) // kinetics //NEW_LINE('') ! smectite
 		input_string = TRIM(input_string) //      "   Daphnite-7a " // trim(s_precip) // trim(s_daphnite_7a) // kinetics //NEW_LINE('') ! chlorite
 		input_string = TRIM(input_string) //      "   Daphnite-14a " // trim(s_precip) // trim(s_daphnite_14a) // kinetics //NEW_LINE('')! chlorite
 			 input_string = TRIM(input_string) //"    Kaolinite " // trim(s_precip) // trim(s_kaolinite) // kinetics //NEW_LINE('') ! zeolite
@@ -2255,8 +2272,8 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 
 			 !input_string = TRIM(input_string) //"    Mesolite " // trim(s_precip) // trim(s_mesolite) // kinetics //NEW_LINE('') ! zeolite
 		!input_string = TRIM(input_string) //      "    Prehnite " // trim(s_precip) // trim(s_prehnite) // kinetics //NEW_LINE('')
-		input_string = TRIM(input_string) //      "    Scolecite " // trim(s_precip) // trim(s_scolecite) // kinetics //NEW_LINE('') ! zeolite
-			 input_string = TRIM(input_string) //"    Gismondine " // trim(s_precip) // trim(s_gismondine) // kinetics //NEW_LINE('') ! zeolite
+		!input_string = TRIM(input_string) //      "    Scolecite " // trim(s_precip) // trim(s_scolecite) // kinetics //NEW_LINE('') ! zeolite
+			 !input_string = TRIM(input_string) //"    Gismondine " // trim(s_precip) // trim(s_gismondine) // kinetics //NEW_LINE('') ! zeolite
 
 		! &"    Kaolinite 0.0 " // trim(s_kaolinite) // kinetics //NEW_LINE('')// & ! clay
 		! &"    Goethite 0.0 " // trim(s_goethite) // kinetics //NEW_LINE('')// &
@@ -2343,7 +2360,12 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 		&"-start" //NEW_LINE('')// &
 		&"	 10 base0 = 1e-14" //NEW_LINE('')// &
 		&"	 20 if (ACT('Al+3') > 1e-14) then base0 = ACT('Al+3')" //NEW_LINE('')// &
-		&"    30 rate0=M*110.0*((4.56e5)/(3.0e6))*" // TRIM(param_exp_string_in) // "*(2.51189e-6)*exp(-25.5/(.008314*TK))*(((ACT('H+')^3)/(ACT('Al+3')))^.33333)" //NEW_LINE('')// &
+		! &"    30 rate0=M*110.0*((4.56e5)/(3.0e6))*" // TRIM(param_exp_string_in) // "*(2.51189e-6)*exp(-25.5/(.008314*TK))*(((ACT('H+')^3)/(ACT('Al+3')))^.33333)" //NEW_LINE('')// &
+
+		&"    30 rate0=M*110.0*((4.56e5)/(3.0e6))*" // TRIM(param_exp_string_in) // "*(2.51189e-6)*exp(-25.5/(.008314*TK))*(((ACT('H+')^3)/base0)^.33333)" //NEW_LINE('')// &
+
+
+
 		! &"    30 rate0=" // TRIM(param_exp1_string_in) // " " //NEW_LINE('')// &
 
 

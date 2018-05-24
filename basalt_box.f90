@@ -28,9 +28,21 @@ end interface
 
 
 integer, parameter :: g_pri=5, g_sec=80, g_sol=15, g_med=7, n_box=3, alt_num=136
+
+
 integer, parameter :: tn = 200000, tp = 1000
 integer :: i, ii, j, jj
 real(4) :: t_min = 0.0, t_max = 1.57e14
+
+
+! integer, parameter :: tn = 20000, tp = 100
+! integer :: i, ii, j, jj
+! real(4) :: t_min = 0.0, t_max = 1.57e13
+
+! integer, parameter :: tn = 50000, tp = 1000
+! integer :: i, ii, j, jj
+! real(4) :: t_min = 0.0, t_max = 3.925e13
+
 real(4) :: dt
 real(4) :: solute0(g_sol)
 real(4) :: primary(g_pri,n_box), secondary(g_sec,n_box), solute(g_sol,n_box), medium(g_med,n_box)
@@ -104,7 +116,8 @@ write(*,*) "PARAM_SW_DIFF = f(PARAM_Q)" , param_sw_diff
 
 ! current temp stages in use
 
-temp_100_2ht = 40.0
+!- REACTION TEMPERATURE
+temp_100_2ht = 60.0
 
 if (param_temp .eq. 100) then
 	temps(:,1) = temp_100_2ht

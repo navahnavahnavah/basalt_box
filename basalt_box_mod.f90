@@ -2234,7 +2234,20 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 		input_string = TRIM(input_string) //      "    Nontronite-Na " // TRIM(s_precip) // TRIM(s_nont_na) // kinetics //NEW_LINE('') ! smectite
 		input_string = TRIM(input_string) //      "    Nontronite-Mg " // TRIM(s_precip) // TRIM(s_nont_mg) // kinetics //NEW_LINE('') ! smectite
 		input_string = TRIM(input_string) //      "    Fe-Celadonite " // TRIM(s_precip) // TRIM(s_fe_celadonite) // kinetics //NEW_LINE('') ! mica
-		!input_string = TRIM(input_string) //      "    Nontronite-Ca " // TRIM(s_precip) // TRIM(s_nont_ca) // kinetics //NEW_LINE('') ! smectite
+
+		! new phase
+		input_string = TRIM(input_string) //      "    Nontronite-Ca " // TRIM(s_precip) // TRIM(s_nont_ca) // kinetics //NEW_LINE('') ! smectite
+		! new phase
+		input_string = TRIM(input_string) //      "    Montmor-Ca " // TRIM(s_precip) // TRIM(s_mont_ca) // kinetics //NEW_LINE('') ! smectite
+		! new phase
+		input_string = TRIM(input_string) //      "    Fe-Saponite-Ca " // TRIM(s_precip) // TRIM(s_fe_saponite_ca) // kinetics //NEW_LINE('') ! sap smec
+		!new phase
+		input_string = TRIM(input_string) //      "    Vermiculite-Ca " // TRIM(s_precip) // TRIM(s_verm_ca) // kinetics //NEW_LINE('') ! clay
+		! new phase
+		input_string = TRIM(input_string) //      "    Prehnite " // trim(s_precip) // trim(s_prehnite) // kinetics //NEW_LINE('')
+
+
+
 		input_string = TRIM(input_string) //      "    Analcime " // TRIM(s_precip) // TRIM(s_analcime) // kinetics //NEW_LINE('') ! zeolite
 		input_string = TRIM(input_string) //      "    Phillipsite " // TRIM(s_precip) // TRIM(s_phillipsite) // kinetics //NEW_LINE('') ! zeolite
 		input_string = TRIM(input_string) //      "    Natrolite " // TRIM(s_precip) // TRIM(s_natrolite) // kinetics //NEW_LINE('') ! zeolite
@@ -2244,7 +2257,10 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 		input_string = TRIM(input_string) //      "    Clinochlore-7A " // TRIM(s_precip) // TRIM(s_clinochlore7a) // kinetics //NEW_LINE('') ! chlorite
 		!input_string = TRIM(input_string) //      "    Saponite-Ca " // TRIM(s_precip) // TRIM(s_saponite_ca) // kinetics //NEW_LINE('') ! smectite
 		input_string = TRIM(input_string) //      "    Pyrrhotite " // TRIM(s_precip) // TRIM(s_pyrrhotite) // kinetics //NEW_LINE('') ! sulfide
-		!input_string = TRIM(input_string) //      "    Fe-Saponite-Ca " // TRIM(s_precip) // TRIM(s_fe_saponite_ca) // kinetics //NEW_LINE('') ! sap smec
+
+
+
+
 		input_string = TRIM(input_string) //      "    Fe-Saponite-Mg " // TRIM(s_precip) // TRIM(s_fe_saponite_mg) // kinetics //NEW_LINE('')! sap smec
 
 
@@ -2254,10 +2270,16 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 
 		input_string = TRIM(input_string) //      "    Montmor-Na " // TRIM(s_precip) // TRIM(s_mont_na) // kinetics //NEW_LINE('') ! smectite
 		input_string = TRIM(input_string) //      "    Montmor-Mg " // TRIM(s_precip) // TRIM(s_mont_mg) // kinetics //NEW_LINE('') ! smectite
-		!input_string = TRIM(input_string) //      "    Montmor-Ca " // TRIM(s_precip) // TRIM(s_mont_ca) // kinetics //NEW_LINE('') ! smectite
+
+
+
+
 		!input_string = TRIM(input_string) //      "    Smectite-high-Fe-Mg " // trim(s_precip) // trim(s_smectite) // kinetics //NEW_LINE('') ! smectite
 		input_string = TRIM(input_string) //      "    Vermiculite-Na " // TRIM(s_precip) // TRIM(s_verm_na) // kinetics //NEW_LINE('') ! clay
-		!input_string = TRIM(input_string) //      "    Vermiculite-Ca " // TRIM(s_precip) // TRIM(s_verm_ca) // kinetics //NEW_LINE('') ! clay
+
+
+
+
 		input_string = TRIM(input_string) //      "    Vermiculite-Mg " // TRIM(s_precip) // TRIM(s_verm_mg) // kinetics //NEW_LINE('') ! clay
 		input_string = TRIM(input_string) //      "    Hematite " // TRIM(s_precip) // TRIM(s_hematite) // kinetics //NEW_LINE('') ! iron oxide
 		!input_string = TRIM(input_string) //      "    Epidote  " // trim(s_precip) // trim(s_epidote) // kinetics //NEW_LINE('')
@@ -2270,8 +2292,11 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 
 			 input_string = TRIM(input_string) //"    K-Feldspar " // trim(s_precip) // trim(s_kspar) // kinetics //NEW_LINE('') ! zeolite
 
-			 !input_string = TRIM(input_string) //"    Mesolite " // trim(s_precip) // trim(s_mesolite) // kinetics //NEW_LINE('') ! zeolite
-		!input_string = TRIM(input_string) //      "    Prehnite " // trim(s_precip) // trim(s_prehnite) // kinetics //NEW_LINE('')
+			 input_string = TRIM(input_string) //"    Mesolite " // trim(s_precip) // trim(s_mesolite) // kinetics //NEW_LINE('') ! zeolite
+
+
+
+
 		!input_string = TRIM(input_string) //      "    Scolecite " // trim(s_precip) // trim(s_scolecite) // kinetics //NEW_LINE('') ! zeolite
 			 !input_string = TRIM(input_string) //"    Gismondine " // trim(s_precip) // trim(s_gismondine) // kinetics //NEW_LINE('') ! zeolite
 

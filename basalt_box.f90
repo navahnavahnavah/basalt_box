@@ -61,9 +61,9 @@ real(4) :: t_vol_b_0 = 0.006
 ! RUNTIME PARAMETERS
 character(len=300) :: param_path, param_temp_string, param_tra_string, param_xb_string
 character(len=300) :: param_exp_string, param_exp1_string
-character(len=300) :: param_sw_diff_string, param_t_diff_string, param_q_string
+character(len=300) :: param_sw_diff_string, param_t_diff_string, param_q_string, param_react_temp_string
 real(4) :: param_temp, param_tra, param_xb, param_exp, param_exp1
-real(4) :: param_sw_diff, param_t_diff, param_q
+real(4) :: param_sw_diff, param_t_diff, param_q, param_react_temp
 
 
 
@@ -79,6 +79,7 @@ call getarg(6,param_exp1_string)
 call getarg(7,param_sw_diff_string)
 call getarg(8,param_t_diff_string)
 call getarg(9,param_q_string)
+call getarg(10,param_react_temp_string)
 
 
 read (param_temp_string, *) param_temp
@@ -114,10 +115,13 @@ write(*,*) "PARAM_Q: " , param_q
 write(*,*) "PARAM_SW_DIFF = f(PARAM_Q)" , param_sw_diff
 
 
+read (param_react_temp_string, *) param_react_temp
+
+
 ! current temp stages in use
 
 !- REACTION TEMPERATURE
-temp_100_2ht = 60.0
+temp_100_2ht = param_react_temp!60.0
 
 if (param_temp .eq. 100) then
 	temps(:,1) = temp_100_2ht

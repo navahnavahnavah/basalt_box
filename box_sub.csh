@@ -15,8 +15,8 @@
 # set the output and error files
 
 ## CHANGE END OF PATH HERE!
-#PBS -o /data/navah/bb_output/z_group_ad_full_60/$PBS_JOBNAME/e_out0.txt
-#PBS -e /data/navah/bb_output/z_group_ad_full_60/$PBS_JOBNAME/e_err0.txt
+#PBS -o /data/navah/bb_output/z_group_bd_full_60/$PBS_JOBNAME/e_out0.txt
+#PBS -e /data/navah/bb_output/z_group_bd_full_60/$PBS_JOBNAME/e_err0.txt
 #PBS -m abe -M navah@uchicago.edu
 # set the number of nodes to use, and number of processors
 # to use per node
@@ -47,12 +47,14 @@ set PARAM_EXP1     = '1.0e-15'
 
 set PARAM_SW_DIFF  = '11.0'
 
+set PARAM_REACT_TEMP = '60.0'
+
 #set PARAM_Q = '1.0'
 #set PARAM_T_DIFF = '11.5'
 
 
 ## CHANGE END OF PATH HERE!
-set PARAM_PATH = '/data/navah/bb_output/z_group_ad_full_60/'$PBS_JOBNAME'/'
+set PARAM_PATH = '/data/navah/bb_output/z_group_bd_full_60/'$PBS_JOBNAME'/'
 
 echo $PARAM_PATH
 # set PROGNAME to the name of your program
@@ -118,7 +120,7 @@ cd ${WORKDIR}
 #echo $PARAM_PATH'secondary_mat*.txt'
 find $PARAM_PATH -name 'z_secondary_mat*.txt' -exec rm -f {} \;
 wait
-${LAUNCH} -n {$NCPU} -hostfile ${PBS_NODEFILE} ${WORKDIR}/${PROGNAME} ${PARAM_PATH} ${PARAM_TEMP} ${PARAM_TRA} ${PARAM_XB} ${PARAM_EXP} ${PARAM_EXP1} ${PARAM_SW_DIFF} ${PARAM_T_DIFF} ${PARAM_Q}
+${LAUNCH} -n {$NCPU} -hostfile ${PBS_NODEFILE} ${WORKDIR}/${PROGNAME} ${PARAM_PATH} ${PARAM_TEMP} ${PARAM_TRA} ${PARAM_XB} ${PARAM_EXP} ${PARAM_EXP1} ${PARAM_SW_DIFF} ${PARAM_T_DIFF} ${PARAM_Q} ${PARAM_REACT_TEMP}
 
 
 

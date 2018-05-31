@@ -2383,8 +2383,8 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 
 		&"BGlass" //NEW_LINE('')// &
 		&"-start" //NEW_LINE('')// &
-		&"	 10 base0 = 1e-16" //NEW_LINE('')// &
-		&"	 20 if (ACT('Al+3') > 1e-16) then base0 = ACT('Al+3')" //NEW_LINE('')// &
+		&"	 10 base0 = 1e-14" //NEW_LINE('')// &
+		&"	 20 if (ACT('Al+3') > 1e-14) then base0 = ACT('Al+3')" //NEW_LINE('')// &
 		! &"    30 rate0=M*110.0*((4.56e5)/(3.0e6))*" // TRIM(param_exp_string_in) // "*(2.51189e-6)*exp(-25.5/(.008314*TK))*(((ACT('H+')^3)/(ACT('Al+3')))^.33333)" //NEW_LINE('')// &
 
 		&"    30 rate0=M*110.0*((4.56e5)/(3.0e6))*" // TRIM(param_exp_string_in) // "*(2.51189e-6)*exp(-25.5/(.008314*TK))*(((ACT('H+')^3)/base0)^.33333)" //NEW_LINE('')// &

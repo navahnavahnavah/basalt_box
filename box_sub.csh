@@ -15,8 +15,8 @@
 # set the output and error files
 
 ## CHANGE END OF PATH HERE!
-#PBS -o /data/navah/bb_output/z_group_dd_full_70/$PBS_JOBNAME/e_out0.txt
-#PBS -e /data/navah/bb_output/z_group_dd_full_70/$PBS_JOBNAME/e_err0.txt
+#PBS -o /data/navah/bb_output/z_h_d_50/$PBS_JOBNAME/e_out0.txt
+#PBS -e /data/navah/bb_output/z_h_d_50/$PBS_JOBNAME/e_err0.txt
 #PBS -m abe -M navah@uchicago.edu
 # set the number of nodes to use, and number of processors
 # to use per node
@@ -47,14 +47,14 @@ set PARAM_EXP1     = '1.0e-15'
 
 set PARAM_SW_DIFF  = '11.0'
 
-set PARAM_REACT_TEMP = '70.0'
+set PARAM_REACT_TEMP = '50.0'
 
 #set PARAM_Q = '1.0'
 #set PARAM_T_DIFF = '11.5'
 
 
 ## CHANGE END OF PATH HERE!
-set PARAM_PATH = '/data/navah/bb_output/z_group_dd_full_70/'$PBS_JOBNAME'/'
+set PARAM_PATH = '/data/navah/bb_output/z_h_d_50/'$PBS_JOBNAME'/'
 
 echo $PARAM_PATH
 # set PROGNAME to the name of your program
@@ -113,7 +113,8 @@ echo $PARAM_PATH
 
 # set SCRDIR=/state/partition1/navah/${PBS_JOBID}/
 # mkdir -p $SCRDIR
-#
+
+mkdir $PARAM_PATH
 #
 # cd $SCRDIR
 cd ${WORKDIR}

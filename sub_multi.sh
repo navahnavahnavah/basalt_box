@@ -19,17 +19,42 @@
 # set for 50, 60
 # declare -a node_array=('compute-0-0:ppn=1' 'compute-0-1:ppn=1' 'compute-0-2:ppn=1' 'compute-0-3:ppn=1' 'compute-1-3:ppn=1' 'compute-1-4:ppn=1')
 
-declare -a node_array=('compute-0-0:ppn=1' 'compute-0-1:ppn=1' 'compute-0-2:ppn=1' 'compute-0-3:ppn=1' 'compute-0-4:ppn=1' 'compute-1-0:ppn=1' 'compute-1-1:ppn=1' 'compute-1-2:ppn=1' 'compute-1-3:ppn=1' 'compute-1-4:ppn=1')
+#declare -a node_array=('compute-0-0:ppn=1' 'compute-0-1:ppn=1' 'compute-0-2:ppn=1' 'compute-0-3:ppn=1' 'compute-0-4:ppn=1' 'compute-1-0:ppn=1' 'compute-1-1:ppn=1' 'compute-1-2:ppn=1' 'compute-1-3:ppn=1' 'compute-1-4:ppn=1')
+
+
+
+#declare -a node_array=('compute-0-0:ppn=1' 'compute-0-1:ppn=1' 'compute-0-2:ppn=1' 'compute-0-3:ppn=1' 'compute-0-4:ppn=1' 'compute-1-5:ppn=1')
+
+#declare -a node_array=('compute-0-3:ppn=1' 'compute-0-4:ppn=1' 'compute-1-5:ppn=1' 'compute-1-8:ppn=1' 'compute-1-9:ppn=1' 'compute-1-0:ppn=1' )
+
+#declare -a node_array=('compute-0-0:ppn=1' 'compute-0-1:ppn=1' 'compute-0-2:ppn=1' 'compute-0-3:ppn=1' 'compute-0-4:ppn=1' 'compute-1-5:ppn=1' 'compute-1-8:ppn=1' 'compute-1-9:ppn=1' 'compute-1-0:ppn=1' )
+
+
+#declare -a node_array=('compute-0-0:ppn=1' 'compute-0-1:ppn=1' 'compute-1-0:ppn=1' 'compute-0-0:ppn=1' 'compute-0-1:ppn=1' 'compute-1-0:ppn=1')
+
+
+
+
+
+
+#declare -a node_array=('compute-0-0:ppn=1' 'compute-0-1:ppn=1' 'compute-0-2:ppn=1' 'compute-0-0:ppn=1' 'compute-0-1:ppn=1' 'compute-0-2:ppn=1')
+declare -a node_array=('compute-0-3:ppn=1' 'compute-0-4:ppn=1' 'compute-1-0:ppn=1' 'compute-0-3:ppn=1' 'compute-0-4:ppn=1' 'compute-1-0:ppn=1')
+#declare -a node_array=('compute-1-6:ppn=1' 'compute-1-7:ppn=1' 'compute-1-8:ppn=1' 'compute-1-6:ppn=1' 'compute-1-7:ppn=1' 'compute-1-8:ppn=1')
+
 node_length=${#node_array[@]}
-cut=11
+cut=12
 
 
 ii=0
-for q in "0.5" "1.0" "1.5" "2.0" "2.5" "3.0" "3.5" "4.0" "4.5" "5.0"; do
-## for q in "0.5" "1.0" "1.5" "2.0" "2.5" "3.0" ; do
+## for q in "0.5" "1.0" "1.5" "2.0" "2.5" "3.0" "3.5" "4.0" "4.5" "5.0"; do
+#for q in "0.5" "1.0" "1.5" "2.0" "2.5" "3.0" ; do
+for q in "0.5" "1.0" ; do
 ## for q in "3.5" "4.0" "4.5" "5.0" ; do
 	## for diff in "2.00" "2.25" "2.50" "2.75" "3.00" "3.25" "3.50" "3.75" "4.00" "4.25" "4.50"; do
-	for diff in "2.00" "2.25" "2.50" "2.75" "3.00" "3.25" "3.50" "3.75" "4.00" "4.25" "4.50"; do
+	## for diff in "2.00" "2.25" "2.50" "2.75" "3.00" "3.25" "3.50" "3.75" "4.00" "4.25" "4.50"; do
+
+	#for diff in "2.00" "2.50" "3.00" "3.50" "4.00" "4.50"; do
+	for diff in "2.00" "2.50"; do
 		ii=$(( $ii + 1 ))
 		##echo $ii
 

@@ -2274,7 +2274,7 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 
 
 
-		!input_string = TRIM(input_string) //      "    Smectite-high-Fe-Mg " // trim(s_precip) // trim(s_smectite) // kinetics //NEW_LINE('') ! smectite
+		input_string = TRIM(input_string) //      "    Smectite-high-Fe-Mg " // trim(s_precip) // trim(s_smectite) // kinetics //NEW_LINE('') ! smectite
 		input_string = TRIM(input_string) //      "    Vermiculite-Na " // TRIM(s_precip) // TRIM(s_verm_na) // kinetics //NEW_LINE('') ! clay
 
 
@@ -2283,7 +2283,7 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 		input_string = TRIM(input_string) //      "    Vermiculite-Mg " // TRIM(s_precip) // TRIM(s_verm_mg) // kinetics //NEW_LINE('') ! clay
 		input_string = TRIM(input_string) //      "    Hematite " // TRIM(s_precip) // TRIM(s_hematite) // kinetics //NEW_LINE('') ! iron oxide
 		!input_string = TRIM(input_string) //      "    Epidote  " // trim(s_precip) // trim(s_epidote) // kinetics //NEW_LINE('')
-		!input_string = TRIM(input_string) //      "    Smectite-low-Fe-Mg " // trim(s_precip) // trim(s_smectite_low) // kinetics //NEW_LINE('') ! smectite
+		input_string = TRIM(input_string) //      "    Smectite-low-Fe-Mg " // trim(s_precip) // trim(s_smectite_low) // kinetics //NEW_LINE('') ! smectite
 		input_string = TRIM(input_string) //      "   Daphnite-7a " // trim(s_precip) // trim(s_daphnite_7a) // kinetics //NEW_LINE('') ! chlorite
 		input_string = TRIM(input_string) //      "   Daphnite-14a " // trim(s_precip) // trim(s_daphnite_14a) // kinetics //NEW_LINE('')! chlorite
 			 input_string = TRIM(input_string) //"    Kaolinite " // trim(s_precip) // trim(s_kaolinite) // kinetics //NEW_LINE('') ! zeolite

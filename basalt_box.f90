@@ -30,9 +30,9 @@ end interface
 integer, parameter :: g_pri=5, g_sec=80, g_sol=15, g_med=7, n_box=3, alt_num=136
 
 
-integer, parameter :: tn = 200000, tp = 1000
+integer, parameter :: tn = 100000, tp = 1000
 integer :: i, ii, j, jj
-real(4) :: t_min = 0.0, t_max = 1.57e14
+real(4) :: t_min = 0.0, t_max = 0.785e14
 
 
 ! integer, parameter :: tn = 20000, tp = 100
@@ -54,9 +54,9 @@ real(4) :: temp_100_ht(tn), temp_100_2ht(tn)
 character(len=300) :: path
 character(len=300) :: s_i
 integer :: in
-real(4) :: t_vol_s_0 = 0.006
-real(4) :: t_vol_a_0 = 0.006
-real(4) :: t_vol_b_0 = 0.006
+real(4) :: t_vol_s_0 = 0.003
+real(4) :: t_vol_a_0 = 0.003
+real(4) :: t_vol_b_0 = 0.003
 
 ! RUNTIME PARAMETERS
 character(len=300) :: param_path, param_temp_string, param_tra_string, param_xb_string
@@ -97,6 +97,36 @@ read (param_t_diff_string, *) param_t_diff
 write(*,*) "PARAM_SW_DIFF BEFORE: " , param_sw_diff
 param_sw_diff = 10.0**(param_sw_diff)
 write(*,*) "PARAM_SW_DIFF AFTER: " , param_sw_diff
+
+
+write(*,*) "before param_t_diff: " , param_t_diff
+
+if (param_t_diff .eq. 2.0) then
+	param_t_diff = 2.0
+	write(*,*) "after param_t_diff: " , param_t_diff
+
+else if (param_t_diff .eq. 2.5) then
+	param_t_diff = 3.0
+	write(*,*) "after param_t_diff: " , param_t_diff
+
+else if (param_t_diff .eq. 3.0) then
+	param_t_diff = 4.0
+	write(*,*) "after param_t_diff: " , param_t_diff
+
+else if (param_t_diff .eq. 3.5) then
+	param_t_diff = 5.0
+	write(*,*) "after param_t_diff: " , param_t_diff
+
+else if (param_t_diff .eq. 4.0) then
+	param_t_diff = 6.0
+	write(*,*) "after param_t_diff: " , param_t_diff
+
+else if (param_t_diff .eq. 4.5) then
+	param_t_diff = 7.0
+	write(*,*) "after param_t_diff: " , param_t_diff
+
+end if
+
 param_t_diff = (3.14e7)*(10.0**(param_t_diff))
 
 param_tra = param_tra/1000.0
@@ -109,7 +139,9 @@ path = param_path !'/data/navah/summer16/basalt_box/output/test0/'
 
 read (param_q_string, *) param_q
 
-param_sw_diff = (3.14e7)*(t_vol_s_0/1000.0)/((1.0e-9)*param_q)
+! param_sw_diff = (3.14e7)*(t_vol_s_0/1000.0)/((1.0e-9)*param_q)
+! param_sw_diff = (3.14e7)*(t_vol_s_0/1000.0)/((3.6e-11)*param_q)
+param_sw_diff = (1.0e5)*(3.14e7)/(10.0*param_q)
 
 write(*,*) "PARAM_Q: " , param_q
 write(*,*) "PARAM_SW_DIFF = f(PARAM_Q)" , param_sw_diff
@@ -224,7 +256,7 @@ do j = 1,tn
 
 	! write(*,*) "timestep:" , j
 
-	if (mod(j,tn/100) .eq. 0) then
+	if (mod(j,tn/10) .eq. 0) then
 			OPEN(UNIT=88, status = 'replace', FILE=trim(path) // 'dynamicSubStep.txt')
 			write(88,*) j
 			close ( 88 )
@@ -255,6 +287,7 @@ run_box_out = run_box(primary, secondary, solute, solute0, medium, g_pri, g_sec,
 
 		!# volume scaling
 		if (i == 1) then
+			solute(2,i) = solute(2,i)*t_vol_s_0/solute(3,i)
 			do ii = 4,g_sol
 				solute(ii,i) = solute(ii,i)*t_vol_s_0/solute(3,i)
 			end do
@@ -262,6 +295,7 @@ run_box_out = run_box(primary, secondary, solute, solute0, medium, g_pri, g_sec,
 		end if
 
 		if (i == 2) then
+			solute(2,i) = solute(2,i)*t_vol_a_0/solute(3,i)
 			do ii = 4,g_sol
 				solute(ii,i) = solute(ii,i)*t_vol_a_0/solute(3,i)
 			end do
@@ -269,6 +303,7 @@ run_box_out = run_box(primary, secondary, solute, solute0, medium, g_pri, g_sec,
 		end if
 
 		if (i == 3) then
+			solute(2,i) = solute(2,i)*t_vol_b_0/solute(3,i)
 			do ii = 4,g_sol
 				solute(ii,i) = solute(ii,i)*t_vol_b_0/solute(3,i)
 			end do
@@ -327,6 +362,47 @@ run_box_out = run_box(primary, secondary, solute, solute0, medium, g_pri, g_sec,
 		secondary_mat(:,:,j/(tn/tp)) = secondary
 		solute_mat(:,:,j/(tn/tp)) = solute
 		medium_mat(:,:,j/(tn/tp)) = medium
+
+
+		! if (mod(j,tn/5) .eq. 0.0) then
+		!
+		! 	! writer = write_vec ( tp, primary_mat(), trim(path) // 'y.txt' )
+		!
+		! 	!# WRITE TO FILE
+		! 	writer = write_matrix(n_box, tp, primary_mat(5,:,:), trim(path) // 'z_primary_mat5.txt')
+		! 	! writer = write_matrix(n_box, tp, primary_mat(4,:,:), trim(path) // 'z_primary_mat4.txt')
+		! 	! writer = write_matrix(n_box, tp, primary_mat(3,:,:), trim(path) // 'z_primary_mat3.txt')
+		! 	! writer = write_matrix(n_box, tp, primary_mat(2,:,:), trim(path) // 'z_primary_mat2.txt')
+		!
+		! 	writer = write_matrix(n_box, tp, solute_mat(1,:,:), trim(path) // 'z_solute_ph.txt')
+		! 	writer = write_matrix(n_box, tp, solute_mat(2,:,:), trim(path) // 'z_solute_alk.txt')
+		! 	writer = write_matrix(n_box, tp, solute_mat(3,:,:), trim(path) // 'z_solute_w.txt')
+		! 	writer = write_matrix(n_box, tp, solute_mat(4,:,:), trim(path) // 'z_solute_c.txt')
+		! 	writer = write_matrix(n_box, tp, solute_mat(5,:,:), trim(path) // 'z_solute_ca.txt')
+		! 	writer = write_matrix(n_box, tp, solute_mat(6,:,:), trim(path) // 'z_solute_mg.txt')
+		! 	writer = write_matrix(n_box, tp, solute_mat(7,:,:), trim(path) // 'z_solute_na.txt')
+		! 	writer = write_matrix(n_box, tp, solute_mat(8,:,:), trim(path) // 'z_solute_k.txt')
+		! 	writer = write_matrix(n_box, tp, solute_mat(9,:,:), trim(path) // 'z_solute_fe.txt')
+		! 	writer = write_matrix(n_box, tp, solute_mat(10,:,:), trim(path) // 'z_solute_s.txt')
+		! 	writer = write_matrix(n_box, tp, solute_mat(11,:,:), trim(path) // 'z_solute_si.txt')
+		! 	writer = write_matrix(n_box, tp, solute_mat(12,:,:), trim(path) // 'z_solute_cl.txt')
+		! 	writer = write_matrix(n_box, tp, solute_mat(13,:,:), trim(path) // 'z_solute_al.txt')
+		!
+		! 	writer = write_matrix(n_box, tp, medium_mat(1,:,:), trim(path) // 'z_medium_sum.txt')
+		!
+		! 	do i=1,g_sec/2
+		! 	    if (i < 10) then
+		! 			write(s_i,'(i1)') i
+		! 	    else
+		! 			write(s_i,'(i2)') i
+		! 	    end if
+		! 		if (maxval(secondary_mat(i,:,:)) > 0.0) then
+		! 			writer = write_matrix(n_box, tp, secondary_mat(i,:,:), trim(path) // 'z_secondary_mat' // trim(s_i) // '.txt')
+		! 		end if
+		! 	end do
+		!
+		! end if
+
 
 	end if
 

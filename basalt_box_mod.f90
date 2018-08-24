@@ -2281,7 +2281,7 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 
 
 		input_string = TRIM(input_string) //      "    Vermiculite-Mg " // TRIM(s_precip) // TRIM(s_verm_mg) // kinetics //NEW_LINE('') ! clay
-		input_string = TRIM(input_string) //      "    Hematite " // TRIM(s_precip) // TRIM(s_hematite) // kinetics //NEW_LINE('') ! iron oxide
+		!input_string = TRIM(input_string) //      "    Hematite " // TRIM(s_precip) // TRIM(s_hematite) // kinetics //NEW_LINE('') ! iron oxide
 		!input_string = TRIM(input_string) //      "    Epidote  " // trim(s_precip) // trim(s_epidote) // kinetics //NEW_LINE('')
 		input_string = TRIM(input_string) //      "    Smectite-low-Fe-Mg " // trim(s_precip) // trim(s_smectite_low) // kinetics //NEW_LINE('') ! smectite
 		input_string = TRIM(input_string) //      "   Daphnite-7a " // trim(s_precip) // trim(s_daphnite_7a) // kinetics //NEW_LINE('') ! chlorite
@@ -2292,13 +2292,13 @@ function run_box(primary_in, secondary_in, solute_in, solute0_in, medium_in, g_p
 
 			 input_string = TRIM(input_string) //"    K-Feldspar " // trim(s_precip) // trim(s_kspar) // kinetics //NEW_LINE('') ! zeolite
 
-			 input_string = TRIM(input_string) //"    Mesolite " // trim(s_precip) // trim(s_mesolite) // kinetics //NEW_LINE('') ! zeolite
+			 !input_string = TRIM(input_string) //"    Mesolite " // trim(s_precip) // trim(s_mesolite) // kinetics //NEW_LINE('') ! zeolite
 
 
 
 
-		!input_string = TRIM(input_string) //      "    Scolecite " // trim(s_precip) // trim(s_scolecite) // kinetics //NEW_LINE('') ! zeolite
-			 !input_string = TRIM(input_string) //"    Gismondine " // trim(s_precip) // trim(s_gismondine) // kinetics //NEW_LINE('') ! zeolite
+		input_string = TRIM(input_string) //      "    Scolecite " // trim(s_precip) // trim(s_scolecite) // kinetics //NEW_LINE('') ! zeolite
+			 input_string = TRIM(input_string) //"    Gismondine " // trim(s_precip) // trim(s_gismondine) // kinetics //NEW_LINE('') ! zeolite
 
 		! &"    Kaolinite 0.0 " // trim(s_kaolinite) // kinetics //NEW_LINE('')// & ! clay
 		! &"    Goethite 0.0 " // trim(s_goethite) // kinetics //NEW_LINE('')// &

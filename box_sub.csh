@@ -15,8 +15,8 @@
 # set the output and error files
 
 ## CHANGE END OF PATH HERE!
-#PBS -o /data/navah/bb_output/z_h_d_50/$PBS_JOBNAME/e_out0.txt
-#PBS -e /data/navah/bb_output/z_h_d_50/$PBS_JOBNAME/e_err0.txt
+#PBS -o /data/navah/bb_output/z_h_h_65_sub/$PBS_JOBNAME/e_out0.txt
+#PBS -e /data/navah/bb_output/z_h_h_65_sub/$PBS_JOBNAME/e_err0.txt
 #PBS -m abe -M navah@uchicago.edu
 # set the number of nodes to use, and number of processors
 # to use per node
@@ -41,20 +41,20 @@ set PARAM_TEMP     = '100'
 
 set PARAM_TRA      = '11.00'
 set PARAM_XB       = '-2.00'
-set PARAM_EXP      = '2.0e-4'
+set PARAM_EXP      = '1.0e-4'
 # set PARAM_EXP      = '0.0'
 set PARAM_EXP1     = '1.0e-15'
 
 set PARAM_SW_DIFF  = '11.0'
 
-set PARAM_REACT_TEMP = '50.0'
+set PARAM_REACT_TEMP = '65.0'
 
 #set PARAM_Q = '1.0'
 #set PARAM_T_DIFF = '11.5'
 
 
 ## CHANGE END OF PATH HERE!
-set PARAM_PATH = '/data/navah/bb_output/z_h_d_50/'$PBS_JOBNAME'/'
+set PARAM_PATH = '/data/navah/bb_output/z_h_h_65_sub/'$PBS_JOBNAME'/'
 
 echo $PARAM_PATH
 # set PROGNAME to the name of your program

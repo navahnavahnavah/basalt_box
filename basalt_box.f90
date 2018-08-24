@@ -99,33 +99,33 @@ param_sw_diff = 10.0**(param_sw_diff)
 write(*,*) "PARAM_SW_DIFF AFTER: " , param_sw_diff
 
 
-write(*,*) "before param_t_diff: " , param_t_diff
-
-if (param_t_diff .eq. 2.0) then
-	param_t_diff = 2.0
-	write(*,*) "after param_t_diff: " , param_t_diff
-
-else if (param_t_diff .eq. 2.5) then
-	param_t_diff = 3.0
-	write(*,*) "after param_t_diff: " , param_t_diff
-
-else if (param_t_diff .eq. 3.0) then
-	param_t_diff = 4.0
-	write(*,*) "after param_t_diff: " , param_t_diff
-
-else if (param_t_diff .eq. 3.5) then
-	param_t_diff = 5.0
-	write(*,*) "after param_t_diff: " , param_t_diff
-
-else if (param_t_diff .eq. 4.0) then
-	param_t_diff = 6.0
-	write(*,*) "after param_t_diff: " , param_t_diff
-
-else if (param_t_diff .eq. 4.5) then
-	param_t_diff = 7.0
-	write(*,*) "after param_t_diff: " , param_t_diff
-
-end if
+! write(*,*) "before param_t_diff: " , param_t_diff
+!
+! if (param_t_diff .eq. 2.0) then
+! 	param_t_diff = 2.0
+! 	write(*,*) "after param_t_diff: " , param_t_diff
+!
+! else if (param_t_diff .eq. 2.5) then
+! 	param_t_diff = 3.0
+! 	write(*,*) "after param_t_diff: " , param_t_diff
+!
+! else if (param_t_diff .eq. 3.0) then
+! 	param_t_diff = 4.0
+! 	write(*,*) "after param_t_diff: " , param_t_diff
+!
+! else if (param_t_diff .eq. 3.5) then
+! 	param_t_diff = 5.0
+! 	write(*,*) "after param_t_diff: " , param_t_diff
+!
+! else if (param_t_diff .eq. 4.0) then
+! 	param_t_diff = 6.0
+! 	write(*,*) "after param_t_diff: " , param_t_diff
+!
+! else if (param_t_diff .eq. 4.5) then
+! 	param_t_diff = 7.0
+! 	write(*,*) "after param_t_diff: " , param_t_diff
+!
+! end if
 
 param_t_diff = (3.14e7)*(10.0**(param_t_diff))
 

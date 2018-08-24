@@ -38,23 +38,22 @@
 
 
 #declare -a node_array=('compute-0-0:ppn=1' 'compute-0-1:ppn=1' 'compute-0-2:ppn=1' 'compute-0-0:ppn=1' 'compute-0-1:ppn=1' 'compute-0-2:ppn=1')
-declare -a node_array=('compute-0-3:ppn=1' 'compute-0-4:ppn=1' 'compute-1-0:ppn=1' 'compute-0-3:ppn=1' 'compute-0-4:ppn=1' 'compute-1-0:ppn=1')
+
+declare -a node_array=('compute-0-0:ppn=1' 'compute-0-1:ppn=1' 'compute-0-2:ppn=1' 'compute-0-3:ppn=1' 'compute-0-4:ppn=1' 'compute-1-0:ppn=1' 'compute-1-1:ppn=1' 'compute-1-2:ppn=1' 'compute-1-3:ppn=1' 'compute-1-4:ppn=1' 'compute-1-5:ppn=1' 'compute-1-6:ppn=1' 'compute-1-7:ppn=1' 'compute-1-8:ppn=1' 'compute-1-9:ppn=1' 'compute-0-0:ppn=1' 'compute-1-0:ppn=1' 'compute-0-1:ppn=1' 'compute-0-2:ppn=1' 'compute-0-3:ppn=1' 'compute-0-4:ppn=1' 'compute-1-1:ppn=1' 'compute-1-2:ppn=1' 'compute-1-3:ppn=1' 'compute-1-4:ppn=1' 'compute-1-5:ppn=1' 'compute-1-6:ppn=1' 'compute-1-7:ppn=1' 'compute-1-8:ppn=1' 'compute-1-9:ppn=1')
+
+#declare -a node_array=('compute-0-3:ppn=1' 'compute-0-4:ppn=1' 'compute-1-0:ppn=1' 'compute-0-3:ppn=1' 'compute-0-4:ppn=1' 'compute-1-0:ppn=1')
 #declare -a node_array=('compute-1-6:ppn=1' 'compute-1-7:ppn=1' 'compute-1-8:ppn=1' 'compute-1-6:ppn=1' 'compute-1-7:ppn=1' 'compute-1-8:ppn=1')
 
 node_length=${#node_array[@]}
-cut=12
+cut=6
 
 
 ii=0
-## for q in "0.5" "1.0" "1.5" "2.0" "2.5" "3.0" "3.5" "4.0" "4.5" "5.0"; do
-#for q in "0.5" "1.0" "1.5" "2.0" "2.5" "3.0" ; do
-for q in "0.5" "1.0" ; do
-## for q in "3.5" "4.0" "4.5" "5.0" ; do
-	## for diff in "2.00" "2.25" "2.50" "2.75" "3.00" "3.25" "3.50" "3.75" "4.00" "4.25" "4.50"; do
-	## for diff in "2.00" "2.25" "2.50" "2.75" "3.00" "3.25" "3.50" "3.75" "4.00" "4.25" "4.50"; do
 
-	#for diff in "2.00" "2.50" "3.00" "3.50" "4.00" "4.50"; do
-	for diff in "2.00" "2.50"; do
+for q in "0.5" "1.0" "1.5" "2.0" "2.5" "3.0" "3.5" "4.0" "4.5" "5.0"  ; do
+
+	# for diff in "2.00" "2.50" "3.00" "3.50" "4.00" "4.50" "5.00" "5.50" "6.00"; do
+	for diff in "2.25" "2.75" "3.25" "3.75" "4.25" "4.75" "5.25" "5.75"; do
 		ii=$(( $ii + 1 ))
 		##echo $ii
 
@@ -120,6 +119,43 @@ for q in "0.5" "1.0" ; do
 
 		if [ "$ii" -gt $(($cut * 15)) ]; then
 			this_node=${node_array[15]}
+		fi
+
+		# new for limited processors
+		if [ "$ii" -gt $(($cut * 16)) ]; then
+			this_node=${node_array[16]}
+		fi
+
+		if [ "$ii" -gt $(($cut * 17)) ]; then
+			this_node=${node_array[17]}
+		fi
+
+		if [ "$ii" -gt $(($cut * 18)) ]; then
+			this_node=${node_array[18]}
+		fi
+
+		if [ "$ii" -gt $(($cut * 19)) ]; then
+			this_node=${node_array[19]}
+		fi
+
+		if [ "$ii" -gt $(($cut * 20)) ]; then
+			this_node=${node_array[20]}
+		fi
+
+		if [ "$ii" -gt $(($cut * 21)) ]; then
+			this_node=${node_array[21]}
+		fi
+
+		if [ "$ii" -gt $(($cut * 22)) ]; then
+			this_node=${node_array[22]}
+		fi
+
+		if [ "$ii" -gt $(($cut * 23)) ]; then
+			this_node=${node_array[23]}
+		fi
+
+		if [ "$ii" -gt $(($cut * 24)) ]; then
+			this_node=${node_array[24]}
 		fi
 
 		echo "q_"$q"_diff_"$diff
